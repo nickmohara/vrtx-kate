@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Performance · Operational Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
+</head>
+<body data-page="performance">
+
+<button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+</button>
+<div class="backdrop" id="backdrop"></div>
+
+<div class="shell">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <section>
+      <div class="wrap reveal">
+        <div class="eyebrow">03 — Performance</div>
+        <h3 class="sec-h">How we know it's working</h3>
+        <p class="lede">A lean set of metrics tied to the goals, and a steady cadence of reviews that keeps the framework alive.</p>
+
+        <div class="kpis">
+          <div class="kpi"><div class="k">Intake response time</div><div class="v"><span data-stat="intakeResponseDays">—</span><small style="font-size:16px;color:var(--muted);"> days</small></div><div class="meta" data-stat="intakeResponseMeta">Target ≤ 5 days</div><div class="bar"><i class="g" data-bar="intakeResponseBar" style="width:0;"></i></div></div>
+          <div class="kpi"><div class="k">Process standardized</div><div class="v"><span data-stat="processStandardizedPct">—</span><small style="font-size:16px;color:var(--muted);">%</small></div><div class="meta" data-stat="processStandardizedMeta">Of recurring work on SOPs</div><div class="bar"><i data-bar="processStandardizedBar" style="width:0;"></i></div></div>
+        </div>
+
+        <div class="cadence">
+          <div class="cad"><div class="when">WEEKLY</div><div class="what"><strong>Intake &amp; triage review</strong><span>Process new requests, set priorities, unblock active work.</span></div></div>
+          <div class="cad"><div class="when">MONTHLY</div><div class="what"><strong>Portfolio &amp; performance review</strong><span>Review status, metrics, and priorities with leadership.</span></div></div>
+          <div class="cad"><div class="when">QUARTERLY</div><div class="what"><strong>Strategy &amp; framework review</strong><span>Reassess goals, scoring weights, SOPs, and what to build next.</span></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
