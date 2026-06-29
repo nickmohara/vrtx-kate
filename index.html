@@ -536,13 +536,37 @@ tbody tr:hover{background:var(--signal-soft);}
 
 <script>
 /* ============================================================
-   CONFIG — paste your Google Apps Script Web App URL here.
-   It looks like: https://script.google.com/macros/s/AKfy..../exec
-   Until you set this, the page shows sample data.
+   CONFIG
+   ------------------------------------------------------------
+   The portfolio table is read straight from a PUBLIC Google
+   Sheet (no backend). For it to load, the sheet must be shared:
+       Share → General access → "Anyone with the link: Viewer".
+
+   To point at a different sheet, change SHEET_ID (the long id in
+   the sheet's URL) and GID (the tab — 0 is the first tab).
+
+   STATS below are the headline numbers that AREN'T derived from
+   the portfolio; edit them here. (Active + In-triage counts are
+   computed automatically from the sheet.)
+
+   WRITE_URL is optional: leave it blank and the intake form runs
+   as a demo. To actually save submissions, deploy apps-script.gs
+   as a Web App and paste its /exec URL here (see README).
    ============================================================ */
 const CONFIG = {
-  API_URL: "PASTE_YOUR_APPS_SCRIPT_URL_HERE"
+  SHEET_ID: "12sE8r9h7vw4mHdailNrtRz11tLZqwYajViZzuuqky0E",
+  GID: "0",
+  WRITE_URL: "",
+  STATS: {
+    avgResponse:"2.4", avgResponseNote:"to first reply · SLA 5d",
+    onTimeRate:"88", onTimeRateNote:"milestones met",
+    activeProjectsNote:"across 6 domains", inTriageNote:"awaiting prioritization",
+    intakeResponseDays:"2.4", intakeResponseMeta:"Target ≤ 5 days", intakeResponseBar:"52",
+    onTimeDeliveryPct:"88", onTimeDeliveryMeta:"Target 90%", onTimeDeliveryBar:"88",
+    processStandardizedPct:"45", processStandardizedMeta:"Of recurring work on SOPs", processStandardizedBar:"45"
+  }
 };
+const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&gid=${CONFIG.GID}`;
 
 /* ---------- status label → css/filter key ---------- */
 const STATUS_KEY = {
@@ -552,34 +576,63 @@ const STATUS_KEY = {
   "Done":        "done"
 };
 
-/* ---------- sample data (shown before the sheet is connected, or if it can't be reached) ---------- */
-const SAMPLE = {
-  portfolio: [
-    {project:"HQ chilled-water plant upgrade",   domain:"Facilities",       owner:"J. Okafor", priority:"High", status:"In progress"},
-    {project:"Lab 4 ventilation recertification",domain:"Lab Oversight",    owner:"M. Reyes",  priority:"High", status:"In progress"},
-    {project:"West campus lease consolidation",  domain:"Real Estate",      owner:"—",         priority:"—",    status:"In triage"},
-    {project:"Badge-access system migration",    domain:"Global Security",  owner:"D. Lin",    priority:"Med",  status:"In progress"},
-    {project:"Capital request — Bldg 7 retrofit",domain:"Capital Projects", owner:"—",         priority:"—",    status:"In triage"},
-    {project:"Generator load-test standardization",domain:"Engineering",    owner:"A. Park",   priority:"Low",  status:"On hold"},
-    {project:"Intake & triage SOP rollout",      domain:"OpEx",             owner:"You",       priority:"High", status:"Done"},
-    {project:"Space utilization dashboard",      domain:"Real Estate",      owner:"S. Haddad", priority:"Med",  status:"In progress"}
-  ],
-  stats: {
-    avgResponse:"2.4", avgResponseNote:"to first reply · SLA 5d",
-    onTimeRate:"88", onTimeRateNote:"milestones met",
-    activeProjectsNote:"across 6 domains", inTriageNote:"awaiting prioritization",
-    intakeResponseDays:"2.4", intakeResponseMeta:"Target ≤ 5 days", intakeResponseBar:"52",
-    onTimeDeliveryPct:"88", onTimeDeliveryMeta:"Target 90%", onTimeDeliveryBar:"88",
-    processStandardizedPct:"45", processStandardizedMeta:"Of recurring work on SOPs", processStandardizedBar:"45"
-  }
-};
+/* ---------- sample data (shown only if the sheet can't be reached) ---------- */
+const SAMPLE_PORTFOLIO = [
+  {project:"HQ chilled-water plant upgrade",   domain:"Facilities",       owner:"J. Okafor", priority:"High", status:"In progress"},
+  {project:"Lab 4 ventilation recertification",domain:"Lab Oversight",    owner:"M. Reyes",  priority:"High", status:"In progress"},
+  {project:"West campus lease consolidation",  domain:"Real Estate",      owner:"—",         priority:"—",    status:"In triage"},
+  {project:"Badge-access system migration",    domain:"Global Security",  owner:"D. Lin",    priority:"Med",  status:"In progress"},
+  {project:"Capital request — Bldg 7 retrofit",domain:"Capital Projects", owner:"—",         priority:"—",    status:"In triage"},
+  {project:"Generator load-test standardization",domain:"Engineering",    owner:"A. Park",   priority:"Low",  status:"On hold"},
+  {project:"Intake & triage SOP rollout",      domain:"OpEx",             owner:"You",       priority:"High", status:"Done"},
+  {project:"Space utilization dashboard",      domain:"Real Estate",      owner:"S. Haddad", priority:"Med",  status:"In progress"}
+];
 
 /* ---------- helpers ---------- */
 function esc(s){
   return String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function isConfigured(){
-  return CONFIG.API_URL && !CONFIG.API_URL.startsWith("PASTE_");
+function hasSheet(){
+  return CONFIG.SHEET_ID && !CONFIG.SHEET_ID.startsWith("PASTE_");
+}
+function canWrite(){
+  return CONFIG.WRITE_URL && !CONFIG.WRITE_URL.startsWith("PASTE_");
+}
+
+/* ---------- minimal RFC-4180 CSV parser ---------- */
+function parseCSV(text){
+  const rows = []; let row = [], field = "", inQ = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(inQ){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; }
+        else inQ = false;
+      } else field += c;
+    } else if(c === '"'){ inQ = true; }
+    else if(c === ','){ row.push(field); field = ""; }
+    else if(c === '\n'){ row.push(field); rows.push(row); row = []; field = ""; }
+    else if(c !== '\r'){ field += c; }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  return rows;
+}
+
+/* ---------- CSV rows → portfolio objects (header-driven) ---------- */
+function rowsToPortfolio(rows){
+  if(!rows.length) return [];
+  const head = rows[0].map(h => h.trim().toLowerCase());
+  const at = name => head.indexOf(name);
+  const iP = at('project'), iD = at('domain'), iO = at('owner'), iPr = at('priority'), iS = at('status');
+  return rows.slice(1)
+    .filter(r => r.join("").trim() !== "")
+    .map(r => ({
+      project:  (r[iP]  || "").trim(),
+      domain:   (r[iD]  || "").trim(),
+      owner:    (r[iO]  || "").trim(),
+      priority: (r[iPr] || "").trim(),
+      status:   (r[iS]  || "").trim()
+    }));
 }
 
 /* ---------- render portfolio table ---------- */
@@ -628,29 +681,29 @@ function bindFilters(){
   rows.forEach(r => { r.style.display = (active === 'all' || r.dataset.s === active) ? '' : 'none'; });
 }
 
-/* ---------- load data from the sheet ---------- */
+/* ---------- load the portfolio straight from the public sheet ---------- */
 async function loadData(){
   const note = document.getElementById('portfolioNote');
   const snapNote = document.getElementById('snapshotNote');
-  if(!isConfigured()){
-    renderPortfolio(SAMPLE.portfolio);
-    applyStats(SAMPLE.stats, SAMPLE.portfolio);
-    note.textContent = "Sample data — not connected to a Google Sheet yet (set API_URL in the code).";
+  if(!hasSheet()){
+    renderPortfolio(SAMPLE_PORTFOLIO);
+    applyStats(CONFIG.STATS, SAMPLE_PORTFOLIO);
+    note.textContent = "Sample data — no sheet configured (set SHEET_ID in the code).";
     return;
   }
   try{
-    const res = await fetch(CONFIG.API_URL, { method:'GET' });
+    const res = await fetch(SHEET_CSV_URL);
     if(!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    renderPortfolio(data.portfolio || []);
-    applyStats(data.stats || {}, data.portfolio || []);
+    const portfolio = rowsToPortfolio(parseCSV(await res.text()));
+    renderPortfolio(portfolio);
+    applyStats(CONFIG.STATS, portfolio);
     note.textContent = "Live from Google Sheets · updates whenever the sheet changes.";
     snapNote.textContent = "▦ live snapshot · pulls from the portfolio list";
   }catch(err){
-    console.error('Could not load from the sheet:', err);
-    renderPortfolio(SAMPLE.portfolio);
-    applyStats(SAMPLE.stats, SAMPLE.portfolio);
-    note.textContent = "Couldn't reach the Google Sheet — showing sample data. (Check the API_URL / deployment.)";
+    console.error('Could not load the sheet:', err);
+    renderPortfolio(SAMPLE_PORTFOLIO);
+    applyStats(CONFIG.STATS, SAMPLE_PORTFOLIO);
+    note.textContent = "Couldn't reach the sheet — showing sample data. (Is it shared “Anyone with the link: Viewer”?)";
   }
 }
 
@@ -680,8 +733,8 @@ function setupForm(){
     const payload = {};
     [...form.elements].forEach(el => { if(el.name) payload[el.name] = el.value.trim(); });
 
-    if(!isConfigured()){
-      confirmMsg.innerHTML = "It's in the queue for triage. You'll get a first response within 5 business days. <span class=\"mono\" style=\"color:var(--faint);\">(Demo — not connected to a sheet yet, nothing was saved.)</span>";
+    if(!canWrite()){
+      confirmMsg.innerHTML = "It's in the queue for triage. You'll get a first response within 5 business days. <span class=\"mono\" style=\"color:var(--faint);\">(Demo — submissions aren't saved yet; see README to enable.)</span>";
       confirm.classList.add('show');
       confirm.scrollIntoView({behavior:'smooth', block:'center'});
       form.reset();
@@ -693,7 +746,7 @@ function setupForm(){
     btn.textContent = "Submitting…";
     try{
       // text/plain avoids a CORS preflight that Apps Script can't answer
-      await fetch(CONFIG.API_URL, {
+      await fetch(CONFIG.WRITE_URL, {
         method:'POST',
         headers:{ 'Content-Type':'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
