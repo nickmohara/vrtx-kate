@@ -6,9 +6,11 @@
  *   • POST → appends a new row to the "Intake" tab        (form submissions)
  *
  * SETUP (see README.md for the full walkthrough):
- *   1. Create a Google Sheet with three tabs: Portfolio, Settings, Intake
- *      (exact column headers are listed below).
- *   2. Extensions → Apps Script. Delete the starter code, paste THIS file.
+ *   1. Open your Google Sheet → Extensions → Apps Script. Delete the starter
+ *      code, paste THIS file, and Save.
+ *   2. In the editor, choose the "setup" function from the dropdown and click
+ *      Run. Approve the permissions prompt. This BUILDS the three tabs
+ *      (Portfolio, Settings, Intake) with headers + sample data for you.
  *   3. Deploy → New deployment → type "Web app".
  *        Execute as:  Me
  *        Who has access:  Anyone
@@ -57,6 +59,80 @@ var INTAKE_COLUMNS = [
   { header: 'Sponsor',    field: 'sponsor' },
   { header: 'Priority',   field: 'priority' }
 ];
+
+/* ============================================================
+ * SETUP — run this ONCE from the editor to build & seed the tabs.
+ * Safe to re-run: it only creates tabs / headers that are missing,
+ * and only seeds sample rows into empty tabs (won't clobber data).
+ * ============================================================ */
+function setup() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // --- Portfolio ---
+  var portfolio = getOrCreateSheet_(ss, SHEET_PORTFOLIO);
+  if (portfolio.getLastRow() === 0) {
+    var pRows = [
+      ['Project', 'Domain', 'Owner', 'Priority', 'Status'],
+      ['HQ chilled-water plant upgrade',    'Facilities',       'J. Okafor', 'High', 'In progress'],
+      ['Lab 4 ventilation recertification', 'Lab Oversight',    'M. Reyes',  'High', 'In progress'],
+      ['West campus lease consolidation',   'Real Estate',      '',          '',     'In triage'],
+      ['Badge-access system migration',     'Global Security',  'D. Lin',    'Med',  'In progress'],
+      ['Capital request — Bldg 7 retrofit', 'Capital Projects', '',          '',     'In triage'],
+      ['Generator load-test standardization','Engineering',     'A. Park',   'Low',  'On hold'],
+      ['Intake & triage SOP rollout',       'OpEx',             'You',       'High', 'Done'],
+      ['Space utilization dashboard',       'Real Estate',      'S. Haddad', 'Med',  'In progress']
+    ];
+    portfolio.getRange(1, 1, pRows.length, 5).setValues(pRows);
+    styleHeader_(portfolio, 5);
+  }
+
+  // --- Settings ---
+  var settings = getOrCreateSheet_(ss, SHEET_SETTINGS);
+  if (settings.getLastRow() === 0) {
+    var sRows = [
+      ['Key', 'Value'],
+      ['avgResponse', '2.4'],
+      ['avgResponseNote', 'to first reply · SLA 5d'],
+      ['onTimeRate', '88'],
+      ['onTimeRateNote', 'milestones met'],
+      ['activeProjectsNote', 'across 6 domains'],
+      ['inTriageNote', 'awaiting prioritization'],
+      ['intakeResponseDays', '2.4'],
+      ['intakeResponseMeta', 'Target ≤ 5 days'],
+      ['intakeResponseBar', '52'],
+      ['onTimeDeliveryPct', '88'],
+      ['onTimeDeliveryMeta', 'Target 90%'],
+      ['onTimeDeliveryBar', '88'],
+      ['processStandardizedPct', '45'],
+      ['processStandardizedMeta', 'Of recurring work on SOPs'],
+      ['processStandardizedBar', '45']
+    ];
+    settings.getRange(1, 1, sRows.length, 2).setValues(sRows);
+    styleHeader_(settings, 2);
+  }
+
+  // --- Intake (header only; rows are appended by the form) ---
+  var intake = getOrCreateSheet_(ss, SHEET_INTAKE);
+  if (intake.getLastRow() === 0) {
+    intake.appendRow(INTAKE_COLUMNS.map(function (c) { return c.header; }));
+    styleHeader_(intake, INTAKE_COLUMNS.length);
+  }
+
+  // tidy: remove the default "Sheet1" if it's empty and unused
+  var def = ss.getSheetByName('Sheet1');
+  if (def && ss.getSheets().length > 1 && def.getLastRow() === 0) ss.deleteSheet(def);
+
+  SpreadsheetApp.getActiveSpreadsheet().toast('Tabs built and seeded. You can deploy now.', 'Opex Hub setup', 5);
+}
+
+function getOrCreateSheet_(ss, name) {
+  return ss.getSheetByName(name) || ss.insertSheet(name);
+}
+
+function styleHeader_(sheet, cols) {
+  sheet.getRange(1, 1, 1, cols).setFontWeight('bold');
+  sheet.setFrozenRows(1);
+}
 
 /* ------------------------------ GET ------------------------------ */
 function doGet(e) {

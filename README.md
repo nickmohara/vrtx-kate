@@ -27,50 +27,34 @@ No code changes or redeploys needed for day-to-day data updates.
 
 ---
 
-## Setup — one time, ~15 minutes
+## Setup — one time, ~10 minutes
 
-### 1. Create the Google Sheet
+### 1. The Google Sheet
 
-Make a new Google Sheet with **three tabs** named exactly:
+A blank sheet has already been created in your Drive:
+**Opex Hub — Backend**. The next step fills in its tabs automatically, so
+there's nothing to build by hand. (If you'd rather start fresh, just make a new
+blank Google Sheet — any empty one works.)
 
-**`Portfolio`** — row 1 headers, then one row per project:
+### 2. Add the backend script and run `setup`
 
-| Project | Domain | Owner | Priority | Status |
-|---|---|---|---|---|
-| HQ chilled-water plant upgrade | Facilities | J. Okafor | High | In progress |
-| West campus lease consolidation | Real Estate |  |  | In triage |
-
-> `Status` must be one of: **In progress · In triage · On hold · Done**
-> (those drive the colored pills and the filter buttons).
-
-**`Settings`** — row 1 headers `Key | Value`, then one row per stat. All optional:
-
-| Key | Value |
-|---|---|
-| avgResponse | 2.4 |
-| onTimeRate | 88 |
-| intakeResponseDays | 2.4 |
-| intakeResponseBar | 52 |
-| onTimeDeliveryPct | 88 |
-| onTimeDeliveryBar | 88 |
-| processStandardizedPct | 45 |
-| processStandardizedBar | 45 |
-
-> `activeProjects` and `inTriage` are **counted automatically** from the
-> Portfolio tab, so you don't need to maintain them by hand (you can still
-> add them to Settings to override). `*Bar` values are 0–100 (the width of
-> the little progress bars). Full key list is documented at the top of
-> `apps-script.gs`.
-
-**`Intake`** — leave it empty. The script creates the header row and columns
-on the first form submission.
-
-### 2. Add the backend script
-
-1. In the Sheet: **Extensions → Apps Script**.
+1. Open the sheet → **Extensions → Apps Script**.
 2. Delete the starter `function myFunction() {}`.
-3. Paste the entire contents of `apps-script.gs`.
-4. **Save** (disk icon).
+3. Paste the entire contents of `apps-script.gs`. **Save** (disk icon).
+4. In the toolbar, pick **`setup`** from the function dropdown → click **Run**.
+5. Approve the permissions prompt (it's your own script — choose your account,
+   "Advanced → Go to … (unsafe)" is normal for personal scripts, then Allow).
+
+`setup` builds three tabs and seeds them:
+
+- **`Portfolio`** — `Project | Domain | Owner | Priority | Status`, with sample
+  rows. `Status` must stay one of **In progress · In triage · On hold · Done**
+  (those drive the pills and filters). Edit/add rows freely.
+- **`Settings`** — `Key | Value` stat rows (avg response, on-time rate, KPI bar
+  widths, etc.). `activeProjects` and `inTriage` are **counted automatically**
+  from the Portfolio tab, so you don't maintain those by hand. Full key list is
+  at the top of `apps-script.gs`.
+- **`Intake`** — header row; the form appends a new row here on each submit.
 
 ### 3. Deploy it as a Web App
 
@@ -97,27 +81,23 @@ Replace the placeholder with your `/exec` URL. Save.
 > Before this is set, the page works fine and shows **sample data** so you can
 > preview it. Once set, it goes live against your sheet.
 
-### 5. Publish to GitHub Pages
+### 5. Publish the change
 
-This repo is `https://github.com/nickmohara/vrtx-kate`.
-
-```bash
-cd vrtx-kate
-git add .
-git commit -m "Opex Hub: sheet-backed site"
-git push origin main
-```
-
-Then on GitHub: **Settings → Pages → Build and deployment → Source: Deploy from
-a branch → Branch: `main` / `(root)` → Save.**
-
-Your site appears at:
+The site is **already live** on GitHub Pages at:
 
 ```
 https://nickmohara.github.io/vrtx-kate/
 ```
 
-(First publish takes a minute or two.)
+So once you've pasted your `/exec` URL into `index.html` (step 4), just push and
+Pages redeploys automatically (~1 min):
+
+```bash
+cd vrtx-kate
+git add index.html
+git commit -m "Connect site to Google Sheet backend"
+git push origin main
+```
 
 ---
 
