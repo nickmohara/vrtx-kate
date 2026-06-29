@@ -95,9 +95,11 @@ const NAV_ITEMS = [
   { href:"index.html",            n:"00", label:"Home",            page:"home" },
   { href:"charter.html",          n:"01", label:"Charter",         page:"charter" },
   { href:"operating-model.html",  n:"02", label:"Operating Model", page:"operating" },
-  { href:"performance.html",      n:"03", label:"Performance",     page:"performance" },
-  { href:"improvement.html",      n:"04", label:"Improvement",     page:"improvement" },
-  { href:"roles.html",            n:"05", label:"Roles",           page:"roles" }
+  { href:"governance.html",       n:"03", label:"Governance",      page:"governance" },
+  { href:"delivery.html",         n:"04", label:"Delivery",        page:"delivery" },
+  { href:"reporting.html",        n:"05", label:"Reporting",       page:"reporting" },
+  { href:"improvement.html",      n:"06", label:"Improvement",     page:"improvement" },
+  { href:"roles.html",            n:"07", label:"Roles",           page:"roles" }
 ];
 
 function buildSidebar(){
@@ -414,7 +416,8 @@ function boot(){
   buildFooter();
   buildModal();
   wireUI();
-  loadData();
+  applyStats(CONFIG.STATS);   // populate KPI/stat elements on any page
+  loadData();                 // portfolio pages also re-apply with derived counts
   if(!isUnlocked()){
     document.documentElement.classList.add("gate-lock");
     injectGate();

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Delivery · Operational Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
+</head>
+<body data-page="delivery">
+
+<button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+</button>
+<div class="backdrop" id="backdrop"></div>
+
+<div class="shell">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <section>
+      <div class="wrap reveal">
+        <div class="eyebrow">04 — Delivery</div>
+        <h3 class="sec-h">From charter to closed</h3>
+        <p class="lede">How an accepted project actually gets delivered — the stages, the gate that must be cleared at each step, and the artifacts that travel with the work.</p>
+
+        <h4 style="font-size:15px;margin-top:36px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Stage gates</h4>
+        <div class="flow">
+          <div class="step"><div class="num">01</div><div class="t">Intake</div><div class="x">Request captured through the form.</div></div>
+          <div class="step"><div class="num">02</div><div class="t">Triage</div><div class="x">Reviewed, scored, accepted — within 5 business days.</div></div>
+          <div class="step"><div class="num">03</div><div class="t">Charter</div><div class="x">Scope, outcome, owner, milestones, budget agreed.</div></div>
+          <div class="step"><div class="num">04</div><div class="t">Delivery</div><div class="x">Domain team executes; status tracked and unblocked.</div></div>
+          <div class="step"><div class="num">05</div><div class="t">Close</div><div class="x">Outcome confirmed; lessons captured.</div></div>
+        </div>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Stage</th><th>Owner</th><th>Exit gate — true before moving on</th><th>Artifact</th></tr></thead>
+            <tbody>
+              <tr><td>Intake</td><td>Requester</td><td>Required fields complete; problem (not solution) is clear.</td><td>Intake form</td></tr>
+              <tr><td>Triage</td><td>OpEx</td><td>Accepted, scored, and an owner named.</td><td>Triage decision</td></tr>
+              <tr><td>Charter</td><td>Domain lead + OpEx</td><td>Scope, outcome, milestones, and budget approved.</td><td>Project charter</td></tr>
+              <tr><td>Delivery</td><td>Domain team</td><td>Milestones met; outcome demonstrably delivered.</td><td>Status reports</td></tr>
+              <tr><td>Close</td><td>OpEx + owner</td><td>Outcome accepted by sponsor; lessons logged.</td><td>Closeout / A3</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Delivery artifacts</h4>
+        <div class="grid-2">
+          <div class="card"><span class="tag">Template</span><h4>Project charter</h4><p>One page: problem, outcome, scope, owner, milestones, budget, and the success measure. Approved before delivery starts.</p></div>
+          <div class="card"><span class="tag">Template</span><h4>Status report</h4><p>RAG status, % complete, next milestone, and any blocker needing a decision — the same fields shown in the portfolio.</p></div>
+          <div class="card"><span class="tag">Template</span><h4>Milestone tracker</h4><p>Dated milestones with owners; the source for target dates and on-track/at-risk calls.</p></div>
+          <div class="card"><span class="tag">Template</span><h4>Closeout &amp; A3</h4><p>Outcome vs. target, what worked, what didn't, and any standard to fold back into the SOPs.</p></div>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">[Link the live templates here once finalized — e.g. a shared Drive or SharePoint folder.]</p>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Status definitions</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Status</th><th>What it means</th><th style="width:140px;">Shown as</th></tr></thead>
+            <tbody>
+              <tr><td>In triage</td><td>Submitted; awaiting accept / score / owner.</td><td><span class="pill triage">In triage</span></td></tr>
+              <tr><td>In progress</td><td>Accepted and chartered; actively being delivered.</td><td><span class="pill prog">In progress</span></td></tr>
+              <tr><td>On hold</td><td>Paused — blocked, deprioritized, or awaiting input.</td><td><span class="pill hold">On hold</span></td></tr>
+              <tr><td>Done</td><td>Outcome delivered and accepted; closed.</td><td><span class="pill done">Done</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">These statuses drive the pills and filters on the <a href="index.html" style="color:var(--signal);border-bottom:1px solid var(--signal-line);">Active Portfolio</a>.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

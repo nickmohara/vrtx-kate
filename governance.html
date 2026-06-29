@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Governance · Operational Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
+</head>
+<body data-page="governance">
+
+<button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+</button>
+<div class="backdrop" id="backdrop"></div>
+
+<div class="shell">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <section>
+      <div class="wrap reveal">
+        <div class="eyebrow">03 — Governance</div>
+        <h3 class="sec-h">Who decides, and how</h3>
+        <p class="lede">How decisions get made, who holds which authority, where work is reviewed, and how to escalate when something is stuck — so prioritization and spend are consistent and defensible.</p>
+
+        <h4 style="font-size:15px;margin-top:36px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Decision rights</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Decision</th><th style="text-align:center;">OpEx</th><th style="text-align:center;">Domain lead</th><th style="text-align:center;">Leadership</th></tr></thead>
+            <tbody>
+              <tr><td>Accept / decline a request</td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+              <tr><td>Set portfolio priority</td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+              <tr><td>Approve project budget</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+              <tr><td>Define standard process</td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci I">I</span></td></tr>
+              <tr><td>Execute project work</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci I">I</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">R Responsible · A Accountable · C Consulted · I Informed</p>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Governance forums</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Forum</th><th>Cadence</th><th>Chair</th><th>Decides</th></tr></thead>
+            <tbody>
+              <tr><td>Intake &amp; Triage Review</td><td class="mono">Weekly</td><td>OpEx lead</td><td>Accept / decline, score, and prioritize new requests; unblock active work.</td></tr>
+              <tr><td>Portfolio Review</td><td class="mono">Monthly</td><td>Ops leadership</td><td>Status, reprioritization, resourcing, and cross-domain trade-offs.</td></tr>
+              <tr><td>Capital / Investment Board</td><td class="mono">Monthly / ad hoc</td><td>[VP Ops] + Finance</td><td>Approve capital spend above threshold and release funding.</td></tr>
+              <tr><td>Strategy &amp; Framework Review</td><td class="mono">Quarterly</td><td>[Dept. head]</td><td>Goals, scoring weights, SOPs, and the roadmap of what to build next.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">[Chairs and membership are placeholders — set to your actual forum owners.]</p>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Authority thresholds</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Decision</th><th style="text-align:center;">Domain lead</th><th style="text-align:center;">OpEx</th><th style="text-align:center;">Leadership / Board</th></tr></thead>
+            <tbody>
+              <tr><td>Spend under $10k</td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci I">I</span></td><td style="text-align:center;"><span class="raci I">—</span></td></tr>
+              <tr><td>Spend $10k – $100k</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci I">I</span></td></tr>
+              <tr><td>Spend over $100k</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+              <tr><td>Accept project into portfolio</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci I">I</span></td></tr>
+              <tr><td>Change a top-5 priority</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">[Illustrative thresholds — replace with Vertex's delegation-of-authority matrix.]</p>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Escalation path</h4>
+        <div class="flow">
+          <div class="step"><div class="num">01</div><div class="t">Raise</div><div class="x">Owner flags the blocker on the project, with impact and the decision needed.</div></div>
+          <div class="step"><div class="num">02</div><div class="t">Domain lead</div><div class="x">Resolves within 2 business days where it's theirs to call.</div></div>
+          <div class="step"><div class="num">03</div><div class="t">OpEx</div><div class="x">Brokers or decides at the weekly triage review if cross-domain.</div></div>
+          <div class="step"><div class="num">04</div><div class="t">Leadership</div><div class="x">Only true exceptions — money, risk, or conflicting priorities.</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
