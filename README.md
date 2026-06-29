@@ -44,7 +44,8 @@ modal** (no separate page).
 
 Open `app.js` and edit the `CONFIG` block at the top:
 
-- `SHEET_ID` / `GID` — which Google Sheet + tab feeds the portfolio.
+- `SHEET_CSV_URL` — the published-to-web CSV link of the Portfolio tab (see
+  "How the data is connected" below).
 - `STATS` — the headline numbers that aren't derived from the sheet (the
   Active/In-triage counts are computed automatically).
 - `WRITE_URL` — leave blank for a demo form; set it to enable real submissions
@@ -57,14 +58,27 @@ Done** (those drive the pills and filters).
 
 ---
 
-## The one setup step: make the sheet public
+## How the data is connected
 
-For the browser to read the sheet it must be link-shared:
+The portfolio is read from the Google Sheet's **Publish to web** CSV — a link
+that Google serves as plain CSV with open CORS, so the browser can fetch it
+directly (a plain "Anyone with the link" share is *not* enough on its own).
 
-1. Open [Opex Hub — Portfolio](https://docs.google.com/spreadsheets/d/12sE8r9h7vw4mHdailNrtRz11tLZqwYajViZzuuqky0E/edit).
-2. **Share** → **General access** → **Anyone with the link**, role **Viewer** → **Done**.
+To (re)connect a sheet:
 
-Until then the site shows built-in sample data with a small note (never breaks).
+1. In the sheet: **File → Share → Publish to web**.
+2. Choose the **Portfolio** tab and format **Comma-separated values (.csv)** →
+   **Publish**.
+3. Copy the `…/pub?output=csv` link and paste it into `CONFIG.SHEET_CSV_URL`
+   in `app.js`. Commit + push.
+
+The sheet needs columns **`Project | Domain | Owner | Priority | Status`** in
+row 1 (extra columns are fine and ignored). `Status` must be one of **In
+progress · In triage · On hold · Done**.
+
+> **Note:** published CSV can be cached by Google for a few minutes, so sheet
+> edits may take up to ~5 min to show on the site. Until a link is set the site
+> shows built-in sample data with a small note (never breaks).
 
 ---
 

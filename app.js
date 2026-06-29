@@ -5,10 +5,10 @@
    ============================================================ */
 
 const CONFIG = {
-  /* Public Google Sheet that feeds the Active Portfolio.
-     Must be shared: Share → "Anyone with the link: Viewer". */
-  SHEET_ID: "12sE8r9h7vw4mHdailNrtRz11tLZqwYajViZzuuqky0E",
-  GID: "0",
+  /* Public CSV that feeds the Active Portfolio.
+     From the Google Sheet: File → Share → Publish to web → the Portfolio
+     tab → Comma-separated values (.csv). Paste that /pub?output=csv link. */
+  SHEET_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIqYJzpRFokxmHJsJ3byaL3zd5hEyPpGEUomHf3bz50a1lVmMDqrMheMOq03ou4g/pub?output=csv",
 
   /* Optional: paste a deployed Apps Script /exec URL to actually save
      intake submissions. Blank = the form runs as a demo. (See README.) */
@@ -28,7 +28,7 @@ const CONFIG = {
     processStandardizedPct:"45", processStandardizedMeta:"Of recurring work on SOPs", processStandardizedBar:"45"
   }
 };
-const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&gid=${CONFIG.GID}`;
+const SHEET_CSV_URL = CONFIG.SHEET_CSV_URL;
 
 /* ============================================================
    1. PASSWORD GATE
@@ -291,7 +291,7 @@ const SAMPLE_PORTFOLIO = [
 function esc(s){
   return String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function hasSheet(){ return CONFIG.SHEET_ID && !CONFIG.SHEET_ID.startsWith("PASTE_"); }
+function hasSheet(){ return CONFIG.SHEET_CSV_URL && !CONFIG.SHEET_CSV_URL.startsWith("PASTE_"); }
 
 function parseCSV(text){
   const rows = []; let row = [], field = "", inQ = false;
@@ -361,7 +361,7 @@ async function loadData(){
   if(!document.querySelector("#portfolioTbl")) return;
   if(!hasSheet()){
     renderPortfolio(SAMPLE_PORTFOLIO); applyStats(CONFIG.STATS, SAMPLE_PORTFOLIO);
-    if(note) note.textContent = "Sample data — no sheet configured (set SHEET_ID in app.js).";
+    if(note) note.textContent = "Sample data — no sheet configured (set SHEET_CSV_URL in app.js).";
     return;
   }
   try{
