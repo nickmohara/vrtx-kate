@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Operational Excellence · Operations &amp; Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131B27; --ink-2:#1B2735; --slate:#29384B;
+  --paper:#F3F5F8; --surface:#FFFFFF; --surface-2:#FAFBFC;
+  --line:#E4E8ED; --line-2:#EDF0F4;
+  --text:#1C2530; --muted:#5C6877; --faint:#8A95A3;
+  --signal:#B26A12; --signal-2:#C9821F; --signal-soft:#F7EBD8; --signal-line:#E8D2AC;
+  --ok:#2C7A57; --ok-soft:#E4F0EA;
+  --info:#2F6390; --info-soft:#E3ECF3;
+  --hold:#6A7585; --hold-soft:#ECEEF1;
+  --shadow:0 1px 2px rgba(20,30,45,.04), 0 8px 24px rgba(20,30,45,.06);
+  --shadow-lg:0 4px 12px rgba(20,30,45,.08), 0 24px 48px rgba(20,30,45,.10);
+  --r:14px; --r-sm:9px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+body{
+  margin:0; background:var(--paper); color:var(--text);
+  font-family:"Inter",system-ui,sans-serif; font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Space Grotesk",sans-serif; margin:0; line-height:1.12; letter-spacing:-.01em; color:var(--ink);}
+p{margin:0;}
+a{color:inherit; text-decoration:none;}
+.mono{font-family:"IBM Plex Mono",monospace;}
+
+/* ---------- layout shell ---------- */
+.shell{display:grid; grid-template-columns:268px 1fr; min-height:100vh;}
+
+/* ---------- sidebar (control panel) ---------- */
+.side{
+  background:var(--ink); color:#C9D2DD; position:sticky; top:0; height:100vh;
+  display:flex; flex-direction:column; padding:26px 0 18px; overflow-y:auto;
+  border-right:1px solid #0C121B;
+}
+.brand{padding:0 26px 22px; border-bottom:1px solid #25313F; margin-bottom:14px;}
+.brand .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.22em; color:var(--signal-2); text-transform:uppercase;}
+.brand h1{color:#fff; font-size:20px; font-weight:600; margin-top:9px; line-height:1.05;}
+.brand .sub{font-size:12px; color:#8593A2; margin-top:7px; line-height:1.4;}
+.nav{padding:4px 14px; display:flex; flex-direction:column; gap:1px; flex:1;}
+.nav .label{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.18em; color:#5E6E7F; text-transform:uppercase; padding:14px 12px 7px;}
+.nav a{
+  display:flex; align-items:center; gap:12px; padding:9px 12px; border-radius:8px;
+  font-size:13.5px; color:#AEB9C6; transition:background .15s,color .15s; position:relative;
+}
+.nav a .n{font-family:"IBM Plex Mono",monospace; font-size:11px; color:#5E6E7F; width:18px; transition:color .15s;}
+.nav a:hover{background:#1E2A38; color:#EAF0F6;}
+.nav a.active{background:#1F2C3B; color:#fff;}
+.nav a.active .n{color:var(--signal-2);}
+.nav a.active::before{content:""; position:absolute; left:-14px; top:7px; bottom:7px; width:3px; background:var(--signal-2); border-radius:0 3px 3px 0;}
+.nav a.cta{background:var(--signal); color:#fff; margin:6px 0 2px; font-weight:500; justify-content:center; gap:8px;}
+.nav a.cta:hover{background:var(--signal-2);}
+.nav a.cta .n{display:none;}
+.side .foot{padding:14px 26px 0; font-size:11px; color:#5E6E7F; line-height:1.5; border-top:1px solid #25313F; margin-top:10px;}
+
+/* ---------- main ---------- */
+.main{min-width:0;}
+.wrap{max-width:880px; margin:0 auto; padding:0 40px;}
+section{padding:74px 0; border-bottom:1px solid var(--line);}
+section:last-child{border-bottom:none;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--signal); display:flex; align-items:center; gap:10px;}
+.eyebrow::before{content:""; width:22px; height:1px; background:var(--signal-line);}
+.sec-h{font-size:30px; font-weight:600; margin:16px 0 14px; letter-spacing:-.02em;}
+.lede{font-size:16.5px; color:var(--muted); max-width:62ch; line-height:1.62;}
+
+/* ---------- hero ---------- */
+.hero{
+  background:
+    radial-gradient(120% 90% at 88% -10%, rgba(178,106,18,.10), transparent 55%),
+    linear-gradient(180deg,#fff 0%, var(--surface-2) 100%);
+  border-bottom:1px solid var(--line);
+}
+.hero .wrap{padding-top:78px; padding-bottom:70px;}
+.hero .eyebrow{color:var(--signal);}
+.hero h2{font-size:46px; font-weight:600; letter-spacing:-.03em; margin:18px 0 0; line-height:1.04;}
+.hero h2 .amp{color:var(--signal);}
+.hero .pitch{font-size:18px; color:var(--muted); margin-top:20px; max-width:54ch; line-height:1.58;}
+.actions{display:flex; gap:13px; margin-top:30px; flex-wrap:wrap;}
+.btn{display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:10px; font-weight:500; font-size:14.5px; cursor:pointer; border:1px solid transparent; transition:transform .12s, box-shadow .15s, background .15s; font-family:inherit;}
+.btn:hover{transform:translateY(-1px);}
+.btn-primary{background:var(--signal); color:#fff; box-shadow:0 2px 8px rgba(178,106,18,.25);}
+.btn-primary:hover{background:var(--signal-2); box-shadow:0 6px 18px rgba(178,106,18,.30);}
+.btn-primary:disabled{opacity:.6; cursor:wait; transform:none;}
+.btn-ghost{background:#fff; color:var(--ink); border-color:var(--line); box-shadow:var(--shadow);}
+.btn-ghost:hover{border-color:#CBD3DC;}
+.btn svg{width:16px; height:16px;}
+
+/* snapshot strip */
+.snapshot{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:46px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow);}
+.snap{background:#fff; padding:20px 22px;}
+.snap .k{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint);}
+.snap .v{font-family:"Space Grotesk",sans-serif; font-size:30px; font-weight:600; color:var(--ink); margin-top:8px; line-height:1; letter-spacing:-.02em;}
+.snap .d{font-size:12px; color:var(--muted); margin-top:7px;}
+.snap .v small{font-size:14px; color:var(--muted); font-weight:500;}
+.snapshot-note{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--faint); margin-top:12px; text-align:right;}
+
+/* ---------- content blocks ---------- */
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:30px;}
+.card{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:24px; box-shadow:var(--shadow); transition:transform .15s, box-shadow .2s, border-color .2s;}
+.card:hover{transform:translateY(-2px); box-shadow:var(--shadow-lg); border-color:#D7DEE6;}
+.card h4{font-size:16.5px; font-weight:600; margin-bottom:8px;}
+.card p{font-size:14px; color:var(--muted); line-height:1.55;}
+.card .tag{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; color:var(--signal); text-transform:uppercase; display:block; margin-bottom:11px;}
+
+.scope{display:flex; flex-wrap:wrap; gap:9px; margin-top:26px;}
+.chip{padding:8px 15px; background:#fff; border:1px solid var(--line); border-radius:50px; font-size:13.5px; color:var(--slate); box-shadow:var(--shadow); display:inline-flex; align-items:center; gap:8px;}
+.chip .dot{width:7px; height:7px; border-radius:50%; background:var(--signal);}
+
+.principles{margin-top:28px; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow); background:#fff;}
+.prin{display:grid; grid-template-columns:200px 1fr; gap:0; border-bottom:1px solid var(--line-2);}
+.prin:last-child{border-bottom:none;}
+.prin dt{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:14.5px; color:var(--ink); padding:16px 20px; background:var(--surface-2); border-right:1px solid var(--line-2);}
+.prin dd{margin:0; padding:16px 20px; font-size:14px; color:var(--muted); line-height:1.55;}
+
+/* flow / workflow */
+.flow{display:flex; gap:0; margin-top:30px; counter-reset:step; flex-wrap:wrap;}
+.step{flex:1; min-width:140px; position:relative; padding:0 8px;}
+.step .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--signal); font-weight:500;}
+.step .t{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:15px; margin:9px 0 6px; color:var(--ink);}
+.step .x{font-size:13px; color:var(--muted); line-height:1.5;}
+.step:not(:last-child)::after{content:"→"; position:absolute; right:-7px; top:-2px; color:var(--faint); font-size:15px;}
+
+/* tables */
+.tbl-wrap{margin-top:26px; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow); background:#fff;}
+table{width:100%; border-collapse:collapse; font-size:14px;}
+thead th{background:var(--ink); color:#fff; text-align:left; padding:13px 18px; font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:11px; letter-spacing:.08em; text-transform:uppercase;}
+tbody td{padding:13px 18px; border-bottom:1px solid var(--line-2); color:var(--text); vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:nth-child(even){background:var(--surface-2);}
+tbody tr{transition:background .12s;}
+tbody tr:hover{background:var(--signal-soft);}
+.tbl-state td{text-align:center; color:var(--faint); font-family:"IBM Plex Mono",monospace; font-size:12px; padding:26px 18px;}
+.tbl-state td:hover{background:transparent;}
+.raci{font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:12px; display:inline-flex; min-width:24px; height:24px; align-items:center; justify-content:center; padding:0 7px; border-radius:6px;}
+.raci.R{background:var(--info-soft); color:var(--info);}
+.raci.A{background:var(--signal-soft); color:var(--signal);}
+.raci.C{background:var(--hold-soft); color:var(--hold);}
+.raci.I{background:transparent; color:var(--faint);}
+
+/* status pills */
+.pill{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:500; padding:4px 11px; border-radius:50px; white-space:nowrap;}
+.pill::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor;}
+.pill.prog{background:var(--info-soft); color:var(--info);}
+.pill.triage{background:var(--signal-soft); color:var(--signal);}
+.pill.done{background:var(--ok-soft); color:var(--ok);}
+.pill.hold{background:var(--hold-soft); color:var(--hold);}
+
+/* portfolio */
+.filters{display:flex; gap:8px; margin-top:26px; flex-wrap:wrap; align-items:center;}
+.filters .fl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-right:4px;}
+.fbtn{padding:7px 14px; border:1px solid var(--line); background:#fff; border-radius:50px; font-size:13px; cursor:pointer; color:var(--muted); font-family:inherit; transition:all .14s;}
+.fbtn:hover{border-color:#CBD3DC; color:var(--text);}
+.fbtn.on{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+/* metrics */
+.kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:30px;}
+.kpi{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:22px; box-shadow:var(--shadow);}
+.kpi .k{font-size:13px; color:var(--muted); font-weight:500;}
+.kpi .v{font-family:"Space Grotesk",sans-serif; font-size:32px; font-weight:600; color:var(--ink); margin:10px 0 4px; letter-spacing:-.02em;}
+.kpi .meta{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--faint);}
+.kpi .bar{height:5px; background:var(--line-2); border-radius:3px; margin-top:13px; overflow:hidden;}
+.kpi .bar i{display:block; height:100%; background:var(--signal); border-radius:3px; transition:width .5s ease;}
+.kpi .bar i.g{background:var(--ok);}
+
+.cadence{margin-top:28px; display:flex; flex-direction:column; gap:0;}
+.cad{display:grid; grid-template-columns:120px 1fr; gap:20px; padding:18px 0; border-top:1px solid var(--line);}
+.cad:last-child{border-bottom:1px solid var(--line);}
+.cad .when{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--signal); font-weight:500; letter-spacing:.04em; padding-top:2px;}
+.cad .what strong{font-family:"Space Grotesk",sans-serif; font-size:15px; display:block; margin-bottom:4px; color:var(--ink);}
+.cad .what span{font-size:13.5px; color:var(--muted);}
+
+/* intake form */
+.form-section{background:linear-gradient(180deg,var(--surface-2),#fff);}
+.form{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:32px; box-shadow:var(--shadow-lg); margin-top:30px;}
+.frow{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+.field{display:flex; flex-direction:column; gap:7px;}
+.field.full{grid-column:1/-1;}
+.field label{font-size:13px; font-weight:500; color:var(--slate);}
+.field label .req{color:var(--signal); margin-left:2px;}
+.field input,.field select,.field textarea{
+  font-family:inherit; font-size:14px; padding:11px 13px; border:1px solid var(--line);
+  border-radius:var(--r-sm); background:var(--surface-2); color:var(--text); transition:border-color .15s, box-shadow .15s, background .15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none; border-color:var(--signal); background:#fff; box-shadow:0 0 0 3px var(--signal-soft);
+}
+.field input.invalid,.field select.invalid,.field textarea.invalid{border-color:#C0392B; box-shadow:0 0 0 3px rgba(192,57,43,.12);}
+.field textarea{resize:vertical; min-height:84px;}
+.field .hint{font-size:12px; color:var(--faint);}
+.form-foot{display:flex; align-items:center; justify-content:space-between; margin-top:8px; gap:16px; flex-wrap:wrap;}
+.form-foot .note{font-size:12.5px; color:var(--muted); max-width:46ch;}
+.form-error{display:none; color:#C0392B; font-size:13px; margin-top:14px;}
+.form-error.show{display:block;}
+.confirm{display:none; background:var(--ok-soft); border:1px solid #BFE0CD; border-radius:var(--r); padding:22px 24px; margin-top:30px; align-items:flex-start; gap:14px;}
+.confirm.show{display:flex;}
+.confirm svg{width:22px; height:22px; color:var(--ok); flex-shrink:0; margin-top:1px;}
+.confirm strong{font-family:"Space Grotesk",sans-serif; color:var(--ink); display:block; margin-bottom:3px;}
+.confirm p{font-size:13.5px; color:var(--muted);}
+
+/* footer */
+.pagefoot{background:var(--ink); color:#8593A2; padding:34px 0;}
+.pagefoot .wrap{display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;}
+.pagefoot .eyebrow{color:var(--signal-2);}
+.pagefoot .eyebrow::before{background:#3A4858;}
+.pagefoot p{font-size:12.5px; line-height:1.6;}
+.pagefoot .r{font-family:"IBM Plex Mono",monospace; font-size:11px; color:#5E6E7F; text-align:right;}
+
+/* reveal */
+.reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+.reveal.in{opacity:1; transform:none;}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+/* mobile */
+.menu-btn{display:none;}
+@media (max-width:880px){
+  .shell{grid-template-columns:1fr;}
+  .side{position:fixed; left:0; top:0; width:268px; z-index:50; transform:translateX(-100%); transition:transform .25s; box-shadow:var(--shadow-lg);}
+  .side.open{transform:none;}
+  .menu-btn{display:inline-flex; position:fixed; top:14px; left:14px; z-index:60; background:var(--ink); color:#fff; border:none; width:44px; height:44px; border-radius:11px; align-items:center; justify-content:center; cursor:pointer; box-shadow:var(--shadow-lg);}
+  .menu-btn svg{width:20px; height:20px;}
+  .backdrop{display:none; position:fixed; inset:0; background:rgba(10,15,22,.5); z-index:40;}
+  .backdrop.show{display:block;}
+  .wrap{padding:0 22px;}
+  .hero .wrap{padding-top:84px;}
+  .hero h2{font-size:34px;}
+  .snapshot{grid-template-columns:1fr 1fr;}
+  .grid-2,.frow,.kpis{grid-template-columns:1fr;}
+  .flow{flex-direction:column; gap:18px;}
+  .step:not(:last-child)::after{content:"↓"; right:auto; left:8px; top:auto; bottom:-16px;}
+  .prin{grid-template-columns:1fr;}
+  .prin dt{border-right:none; border-bottom:1px solid var(--line-2);}
+  .cad{grid-template-columns:1fr; gap:6px;}
+  .tbl-wrap{overflow-x:auto;}
+  table{min-width:560px;}
+}
+</style>
+</head>
+<body>
+
+<button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+</button>
+<div class="backdrop" id="backdrop"></div>
+
+<div class="shell">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="eyebrow">Operations &amp; Real Estate</div>
+      <h1>Operational<br>Excellence</h1>
+      <div class="sub">One front door for getting work into the department.</div>
+    </div>
+    <nav class="nav">
+      <a href="#home" class="nav-link"><span class="n">00</span> Home</a>
+      <a href="#intake" class="cta">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Submit a Project
+      </a>
+      <div class="label">The Framework</div>
+      <a href="#charter" class="nav-link"><span class="n">01</span> Charter</a>
+      <a href="#goals" class="nav-link"><span class="n">02</span> Goals &amp; Objectives</a>
+      <a href="#operating" class="nav-link"><span class="n">03</span> Operating Model</a>
+      <a href="#performance" class="nav-link"><span class="n">04</span> Performance</a>
+      <a href="#improvement" class="nav-link"><span class="n">05</span> Improvement</a>
+      <a href="#roles" class="nav-link"><span class="n">06</span> Roles</a>
+      <div class="label">Workspace</div>
+      <a href="#portfolio" class="nav-link"><span class="n">▦</span> Portfolio</a>
+      <a href="#intake" class="nav-link"><span class="n">▤</span> Intake</a>
+    </nav>
+    <div class="foot">Draft v0.1 · Internal use<br>Owner: [Your name]</div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="wrap">
+        <div class="eyebrow">Operating system for the department</div>
+        <h2>One way in for every project across Operations <span class="amp">&amp;</span> Real Estate.</h2>
+        <p class="pitch">Submit work through a single front door, see how it's prioritized, and follow it to done — across engineering, capital projects, facilities, labs, real estate, and global security.</p>
+        <div class="actions">
+          <a href="#intake" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Submit a Project
+          </a>
+          <a href="#operating" class="btn btn-ghost">How we work</a>
+        </div>
+
+        <div class="snapshot">
+          <div class="snap"><div class="k">Active projects</div><div class="v"><span data-stat="activeProjects">—</span></div><div class="d" data-stat="activeProjectsNote">across all domains</div></div>
+          <div class="snap"><div class="k">In triage</div><div class="v"><span data-stat="inTriage">—</span></div><div class="d" data-stat="inTriageNote">awaiting prioritization</div></div>
+          <div class="snap"><div class="k">Avg. response</div><div class="v"><span data-stat="avgResponse">—</span><small>d</small></div><div class="d" data-stat="avgResponseNote">to first reply · SLA 5d</div></div>
+          <div class="snap"><div class="k">On-time rate</div><div class="v"><span data-stat="onTimeRate">—</span><small>%</small></div><div class="d" data-stat="onTimeRateNote">milestones met</div></div>
+        </div>
+        <div class="snapshot-note" id="snapshotNote">▦ live snapshot · pulls from the portfolio list</div>
+      </div>
+    </section>
+
+    <!-- CHARTER -->
+    <section id="charter">
+      <div class="wrap reveal">
+        <div class="eyebrow">01 — Charter</div>
+        <h3 class="sec-h">What this function is for</h3>
+        <p class="lede">We make the way the department delivers work more consistent, efficient, and measurable — standardizing how projects are taken in, prioritized, and run, and driving continuous improvement across every domain.</p>
+
+        <div class="scope">
+          <span class="chip"><span class="dot"></span>Engineering</span>
+          <span class="chip"><span class="dot"></span>Capital Projects</span>
+          <span class="chip"><span class="dot"></span>Facilities</span>
+          <span class="chip"><span class="dot"></span>Lab Oversight</span>
+          <span class="chip"><span class="dot"></span>Real Estate</span>
+          <span class="chip"><span class="dot"></span>Global Security</span>
+        </div>
+
+        <dl class="principles">
+          <div class="prin"><dt>Standardize, then improve</dt><dd>Establish a repeatable baseline before optimizing. You can't improve a process that isn't defined.</dd></div>
+          <div class="prin"><dt>One front door</dt><dd>All work enters through a single intake path, so nothing is invisible and everything is prioritized on the same basis.</dd></div>
+          <div class="prin"><dt>Decisions from data</dt><dd>Prioritization and performance claims are backed by evidence — not the volume or seniority of who's asking.</dd></div>
+          <div class="prin"><dt>Process before tools</dt><dd>Fix the workflow first. Technology amplifies a good process and entrenches a bad one.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- GOALS -->
+    <section id="goals">
+      <div class="wrap reveal">
+        <div class="eyebrow">02 — Goals &amp; Objectives</div>
+        <h3 class="sec-h">What we're driving toward</h3>
+        <p class="lede">Outcomes, not activities — so the team can see the direction and measure progress against it.</p>
+        <div class="grid-2">
+          <div class="card"><span class="tag">Objective 01</span><h4>A single, trusted intake path</h4><p>Every request enters one front door with a predictable response, replacing scattered emails and hallway asks.</p></div>
+          <div class="card"><span class="tag">Objective 02</span><h4>Fair, visible prioritization</h4><p>A transparent scoring model that ranks work by value and risk — so the portfolio reflects what matters most.</p></div>
+          <div class="card"><span class="tag">Objective 03</span><h4>Standardized delivery</h4><p>Core processes documented and reused across domains, cutting cycle time and coordination overhead.</p></div>
+          <div class="card"><span class="tag">Objective 04</span><h4>Reporting leaders rely on</h4><p>Live portfolio and performance views that make decisions faster and easier to defend.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPERATING MODEL -->
+    <section id="operating">
+      <div class="wrap reveal">
+        <div class="eyebrow">03 — Operating Model</div>
+        <h3 class="sec-h">How work gets done</h3>
+        <p class="lede">The engine room: how work enters, how it's prioritized, how it flows to delivery, and who decides what.</p>
+
+        <h4 style="font-size:15px;margin-top:36px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">From request to close</h4>
+        <div class="flow">
+          <div class="step"><div class="num">01</div><div class="t">Intake</div><div class="x">Request submitted through the form.</div></div>
+          <div class="step"><div class="num">02</div><div class="t">Triage</div><div class="x">Reviewed, scored, decided — within 5 business days.</div></div>
+          <div class="step"><div class="num">03</div><div class="t">Charter</div><div class="x">Scope, outcome, owner, and milestones defined.</div></div>
+          <div class="step"><div class="num">04</div><div class="t">Delivery</div><div class="x">Domain team executes; status tracked and unblocked.</div></div>
+          <div class="step"><div class="num">05</div><div class="t">Close</div><div class="x">Outcome confirmed; lessons captured.</div></div>
+        </div>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">How priority is set</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Criterion</th><th>Guiding question</th><th style="width:90px;">Weight</th></tr></thead>
+            <tbody>
+              <tr><td>Strategic alignment</td><td>Does it advance department goals?</td><td class="mono">30%</td></tr>
+              <tr><td>Risk &amp; compliance</td><td>Does it reduce safety, regulatory, or security risk?</td><td class="mono">25%</td></tr>
+              <tr><td>Business impact</td><td>Cost, capacity, or efficiency gain if done.</td><td class="mono">20%</td></tr>
+              <tr><td>Urgency</td><td>Is there a real, externally-driven deadline?</td><td class="mono">15%</td></tr>
+              <tr><td>Feasibility</td><td>Can it realistically be delivered with current capacity?</td><td class="mono">10%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">Sample weights — tune to what leadership values, summing to 100%.</p>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Who decides what</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Decision</th><th style="text-align:center;">OpEx</th><th style="text-align:center;">Domain lead</th><th style="text-align:center;">Leadership</th></tr></thead>
+            <tbody>
+              <tr><td>Accept / decline a request</td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+              <tr><td>Set portfolio priority</td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+              <tr><td>Approve project budget</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td></tr>
+              <tr><td>Define standard process</td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci I">I</span></td></tr>
+              <tr><td>Execute project work</td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci I">I</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">R Responsible · A Accountable · C Consulted · I Informed</p>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE -->
+    <section id="performance">
+      <div class="wrap reveal">
+        <div class="eyebrow">04 — Performance</div>
+        <h3 class="sec-h">How we know it's working</h3>
+        <p class="lede">A lean set of metrics tied to the goals, and a steady cadence of reviews that keeps the framework alive.</p>
+
+        <div class="kpis">
+          <div class="kpi"><div class="k">Intake response time</div><div class="v"><span data-stat="intakeResponseDays">—</span><small style="font-size:16px;color:var(--muted);"> days</small></div><div class="meta" data-stat="intakeResponseMeta">Target ≤ 5 days</div><div class="bar"><i class="g" data-bar="intakeResponseBar" style="width:0;"></i></div></div>
+          <div class="kpi"><div class="k">On-time delivery</div><div class="v"><span data-stat="onTimeDeliveryPct">—</span><small style="font-size:16px;color:var(--muted);">%</small></div><div class="meta" data-stat="onTimeDeliveryMeta">Target 90%</div><div class="bar"><i data-bar="onTimeDeliveryBar" style="width:0;"></i></div></div>
+          <div class="kpi"><div class="k">Process standardized</div><div class="v"><span data-stat="processStandardizedPct">—</span><small style="font-size:16px;color:var(--muted);">%</small></div><div class="meta" data-stat="processStandardizedMeta">Of recurring work on SOPs</div><div class="bar"><i data-bar="processStandardizedBar" style="width:0;"></i></div></div>
+        </div>
+
+        <div class="cadence">
+          <div class="cad"><div class="when">WEEKLY</div><div class="what"><strong>Intake &amp; triage review</strong><span>Process new requests, set priorities, unblock active work.</span></div></div>
+          <div class="cad"><div class="when">MONTHLY</div><div class="what"><strong>Portfolio &amp; performance review</strong><span>Review status, metrics, and priorities with leadership.</span></div></div>
+          <div class="cad"><div class="when">QUARTERLY</div><div class="what"><strong>Strategy &amp; framework review</strong><span>Reassess goals, scoring weights, SOPs, and what to build next.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPROVEMENT -->
+    <section id="improvement">
+      <div class="wrap reveal">
+        <div class="eyebrow">05 — Continuous Improvement</div>
+        <h3 class="sec-h">How we get better over time</h3>
+        <p class="lede">A deliberate loop — not a heavy certification program — that turns recurring problems into standard fixes.</p>
+        <div class="flow">
+          <div class="step"><div class="num">P</div><div class="t">Plan</div><div class="x">Define the problem, measure the baseline, find root cause.</div></div>
+          <div class="step"><div class="num">D</div><div class="t">Do</div><div class="x">Pilot a change on a small scale.</div></div>
+          <div class="step"><div class="num">C</div><div class="t">Check</div><div class="x">Measure the result against the baseline.</div></div>
+          <div class="step"><div class="num">A</div><div class="t">Act</div><div class="x">Standardize what worked; restart on what didn't.</div></div>
+        </div>
+        <div class="grid-2" style="margin-top:34px;">
+          <div class="card"><span class="tag">Where ideas come from</span><h4>An improvement backlog</h4><p>Sourced from closeout lessons, recurring intake themes, metric outliers, and direct team input — groomed each quarter.</p></div>
+          <div class="card"><span class="tag">How we work a problem</span><h4>A single-page A3</h4><p>Background, current state, root cause, target, countermeasures, and follow-up — kept rigorous and shareable.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROLES -->
+    <section id="roles">
+      <div class="wrap reveal">
+        <div class="eyebrow">06 — Roles &amp; Capability</div>
+        <h3 class="sec-h">Who's accountable, and how to engage</h3>
+        <p class="lede">Execution stays with the domain experts. This function takes in the work, helps prioritize, standardizes the recurring parts, and reports — with a named contact for every domain.</p>
+        <div class="grid-2">
+          <div class="card"><span class="tag">Interface</span><h4>You bring the request</h4><p>Through the intake form, with the problem and desired outcome. We handle triage, prioritization, and tracking from there.</p></div>
+          <div class="card"><span class="tag">Capability</span><h4>We build the reusable parts</h4><p>Charter templates, prioritization guides, status standards, and playbooks — so the work runs consistently without a bottleneck.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio">
+      <div class="wrap reveal">
+        <div class="eyebrow">▦ Workspace — Portfolio</div>
+        <h3 class="sec-h">Where everything stands</h3>
+        <p class="lede">A live view of active and incoming work. Filter by status to see what's moving.</p>
+        <div class="filters">
+          <span class="fl">Filter</span>
+          <button class="fbtn on" data-f="all">All</button>
+          <button class="fbtn" data-f="prog">In progress</button>
+          <button class="fbtn" data-f="triage">In triage</button>
+          <button class="fbtn" data-f="hold">On hold</button>
+          <button class="fbtn" data-f="done">Done</button>
+        </div>
+        <div class="tbl-wrap">
+          <table id="portfolioTbl">
+            <thead><tr><th>Project</th><th>Domain</th><th>Owner</th><th>Priority</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr class="tbl-state"><td colspan="5">Loading portfolio…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;" id="portfolioNote">Connecting to the live list…</p>
+      </div>
+    </section>
+
+    <!-- INTAKE -->
+    <section id="intake" class="form-section">
+      <div class="wrap reveal">
+        <div class="eyebrow">▤ Submit a Project</div>
+        <h3 class="sec-h">Tell us what you need</h3>
+        <p class="lede">One form, any domain. You'll get a first response within 5 business days — every time.</p>
+
+        <form class="form" id="intakeForm" novalidate>
+          <div class="frow">
+            <div class="field"><label for="f-name">Your name <span class="req">*</span></label><input id="f-name" name="name" type="text" placeholder="Full name" required /></div>
+            <div class="field"><label for="f-department">Department <span class="req">*</span></label><input id="f-department" name="department" type="text" placeholder="e.g. Facilities" required /></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label for="f-title">Project title <span class="req">*</span></label><input id="f-title" name="title" type="text" placeholder="Short, scannable name" required /></div>
+            <div class="field"><label for="f-domain">Domain <span class="req">*</span></label>
+              <select id="f-domain" name="domain" required><option value="" disabled selected>Choose a domain…</option><option>Engineering</option><option>Capital Projects</option><option>Facilities</option><option>Lab Oversight</option><option>Real Estate</option><option>Global Security</option><option>Other</option></select>
+            </div>
+          </div>
+          <div class="field full" style="margin-bottom:18px;"><label for="f-problem">Problem statement <span class="req">*</span></label><textarea id="f-problem" name="problem" placeholder="What are you trying to solve? (Describe the problem, not the solution.)" required></textarea></div>
+          <div class="field full" style="margin-bottom:18px;"><label for="f-outcome">Desired outcome</label><textarea id="f-outcome" name="outcome" placeholder="What does 'done and good' look like?"></textarea></div>
+          <div class="frow">
+            <div class="field"><label for="f-driver">Business driver</label>
+              <select id="f-driver" name="driver"><option value="" disabled selected>Select…</option><option>Compliance</option><option>Cost</option><option>Capacity</option><option>Risk</option><option>Growth</option><option>Other</option></select>
+            </div>
+            <div class="field"><label for="f-timeline">Target timeline</label><input id="f-timeline" name="timeline" type="text" placeholder="Any hard deadlines?" /></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label for="f-sponsor">Sponsor / stakeholders</label><input id="f-sponsor" name="sponsor" type="text" placeholder="Who backs this work?" /></div>
+            <div class="field"><label for="f-priority">Your view of priority</label>
+              <select id="f-priority" name="priority"><option value="" disabled selected>Select…</option><option>High</option><option>Medium</option><option>Low</option></select>
+            </div>
+          </div>
+          <div class="form-foot">
+            <p class="note">Submitting logs your request and starts the clock on triage. You'll hear back with a decision and next steps.</p>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit request</button>
+          </div>
+          <p class="form-error" id="formError">Please fill in the required fields marked with *.</p>
+        </form>
+
+        <div class="confirm" id="confirm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <div><strong>Request received.</strong><p id="confirmMsg">It's in the queue for triage. You'll get a first response within 5 business days.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="pagefoot">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Operational Excellence</div>
+          <p style="margin-top:10px;">Operations &amp; Real Estate · One front door for the department's work.</p>
+        </div>
+        <div class="r">Draft v0.1 — internal use<br>Owner: [Your name / title]<br>Last updated: [date]</div>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — paste your Google Apps Script Web App URL here.
+   It looks like: https://script.google.com/macros/s/AKfy..../exec
+   Until you set this, the page shows sample data.
+   ============================================================ */
+const CONFIG = {
+  API_URL: "PASTE_YOUR_APPS_SCRIPT_URL_HERE"
+};
+
+/* ---------- status label → css/filter key ---------- */
+const STATUS_KEY = {
+  "In progress": "prog",
+  "In triage":   "triage",
+  "On hold":     "hold",
+  "Done":        "done"
+};
+
+/* ---------- sample data (shown before the sheet is connected, or if it can't be reached) ---------- */
+const SAMPLE = {
+  portfolio: [
+    {project:"HQ chilled-water plant upgrade",   domain:"Facilities",       owner:"J. Okafor", priority:"High", status:"In progress"},
+    {project:"Lab 4 ventilation recertification",domain:"Lab Oversight",    owner:"M. Reyes",  priority:"High", status:"In progress"},
+    {project:"West campus lease consolidation",  domain:"Real Estate",      owner:"—",         priority:"—",    status:"In triage"},
+    {project:"Badge-access system migration",    domain:"Global Security",  owner:"D. Lin",    priority:"Med",  status:"In progress"},
+    {project:"Capital request — Bldg 7 retrofit",domain:"Capital Projects", owner:"—",         priority:"—",    status:"In triage"},
+    {project:"Generator load-test standardization",domain:"Engineering",    owner:"A. Park",   priority:"Low",  status:"On hold"},
+    {project:"Intake & triage SOP rollout",      domain:"OpEx",             owner:"You",       priority:"High", status:"Done"},
+    {project:"Space utilization dashboard",      domain:"Real Estate",      owner:"S. Haddad", priority:"Med",  status:"In progress"}
+  ],
+  stats: {
+    avgResponse:"2.4", avgResponseNote:"to first reply · SLA 5d",
+    onTimeRate:"88", onTimeRateNote:"milestones met",
+    activeProjectsNote:"across 6 domains", inTriageNote:"awaiting prioritization",
+    intakeResponseDays:"2.4", intakeResponseMeta:"Target ≤ 5 days", intakeResponseBar:"52",
+    onTimeDeliveryPct:"88", onTimeDeliveryMeta:"Target 90%", onTimeDeliveryBar:"88",
+    processStandardizedPct:"45", processStandardizedMeta:"Of recurring work on SOPs", processStandardizedBar:"45"
+  }
+};
+
+/* ---------- helpers ---------- */
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function isConfigured(){
+  return CONFIG.API_URL && !CONFIG.API_URL.startsWith("PASTE_");
+}
+
+/* ---------- render portfolio table ---------- */
+function renderPortfolio(rows){
+  const tbody = document.querySelector('#portfolioTbl tbody');
+  if(!rows || !rows.length){
+    tbody.innerHTML = '<tr class="tbl-state"><td colspan="5">No projects yet.</td></tr>';
+    bindFilters();
+    return;
+  }
+  tbody.innerHTML = rows.map(r => {
+    const key = STATUS_KEY[r.status] || "prog";
+    return `<tr data-s="${key}">
+      <td>${esc(r.project)}</td>
+      <td>${esc(r.domain)}</td>
+      <td>${esc(r.owner || "—")}</td>
+      <td class="mono">${esc(r.priority || "—")}</td>
+      <td><span class="pill ${key}">${esc(r.status)}</span></td>
+    </tr>`;
+  }).join('');
+  bindFilters();
+}
+
+/* ---------- apply stats to snapshot + KPI elements ---------- */
+function applyStats(stats, portfolio){
+  const s = Object.assign({}, stats);
+  // auto-derive the two counts from the portfolio if not explicitly set
+  if(portfolio){
+    if(s.activeProjects == null) s.activeProjects = portfolio.filter(r => r.status === "In progress").length;
+    if(s.inTriage == null)       s.inTriage       = portfolio.filter(r => r.status === "In triage").length;
+  }
+  document.querySelectorAll('[data-stat]').forEach(el => {
+    const key = el.dataset.stat;
+    if(s[key] != null && s[key] !== "") el.textContent = s[key];
+  });
+  document.querySelectorAll('[data-bar]').forEach(el => {
+    const key = el.dataset.bar;
+    if(s[key] != null && s[key] !== "") el.style.width = String(s[key]).replace('%','') + '%';
+  });
+}
+
+/* ---------- filter buttons (re-bound after each render) ---------- */
+function bindFilters(){
+  const rows = [...document.querySelectorAll('#portfolioTbl tbody tr')];
+  const active = document.querySelector('.fbtn.on')?.dataset.f || 'all';
+  rows.forEach(r => { r.style.display = (active === 'all' || r.dataset.s === active) ? '' : 'none'; });
+}
+
+/* ---------- load data from the sheet ---------- */
+async function loadData(){
+  const note = document.getElementById('portfolioNote');
+  const snapNote = document.getElementById('snapshotNote');
+  if(!isConfigured()){
+    renderPortfolio(SAMPLE.portfolio);
+    applyStats(SAMPLE.stats, SAMPLE.portfolio);
+    note.textContent = "Sample data — not connected to a Google Sheet yet (set API_URL in the code).";
+    return;
+  }
+  try{
+    const res = await fetch(CONFIG.API_URL, { method:'GET' });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    renderPortfolio(data.portfolio || []);
+    applyStats(data.stats || {}, data.portfolio || []);
+    note.textContent = "Live from Google Sheets · updates whenever the sheet changes.";
+    snapNote.textContent = "▦ live snapshot · pulls from the portfolio list";
+  }catch(err){
+    console.error('Could not load from the sheet:', err);
+    renderPortfolio(SAMPLE.portfolio);
+    applyStats(SAMPLE.stats, SAMPLE.portfolio);
+    note.textContent = "Couldn't reach the Google Sheet — showing sample data. (Check the API_URL / deployment.)";
+  }
+}
+
+/* ---------- intake form submit ---------- */
+function setupForm(){
+  const form = document.getElementById('intakeForm');
+  const btn  = document.getElementById('submitBtn');
+  const errEl = document.getElementById('formError');
+  const confirm = document.getElementById('confirm');
+  const confirmMsg = document.getElementById('confirmMsg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errEl.classList.remove('show');
+
+    // validate required fields
+    const required = [...form.querySelectorAll('[required]')];
+    let ok = true;
+    required.forEach(el => {
+      const bad = !el.value || !el.value.trim();
+      el.classList.toggle('invalid', bad);
+      if(bad) ok = false;
+    });
+    if(!ok){ errEl.classList.add('show'); return; }
+
+    // collect values
+    const payload = {};
+    [...form.elements].forEach(el => { if(el.name) payload[el.name] = el.value.trim(); });
+
+    if(!isConfigured()){
+      confirmMsg.innerHTML = "It's in the queue for triage. You'll get a first response within 5 business days. <span class=\"mono\" style=\"color:var(--faint);\">(Demo — not connected to a sheet yet, nothing was saved.)</span>";
+      confirm.classList.add('show');
+      confirm.scrollIntoView({behavior:'smooth', block:'center'});
+      form.reset();
+      return;
+    }
+
+    btn.disabled = true;
+    const label = btn.textContent;
+    btn.textContent = "Submitting…";
+    try{
+      // text/plain avoids a CORS preflight that Apps Script can't answer
+      await fetch(CONFIG.API_URL, {
+        method:'POST',
+        headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      confirmMsg.textContent = "It's in the queue for triage. You'll get a first response within 5 business days.";
+      confirm.classList.add('show');
+      confirm.scrollIntoView({behavior:'smooth', block:'center'});
+      form.reset();
+      loadData(); // refresh the portfolio in case the new row shows up
+    }catch(err){
+      console.error('Submit failed:', err);
+      errEl.textContent = "Something went wrong submitting your request. Please try again.";
+      errEl.classList.add('show');
+    }finally{
+      btn.disabled = false;
+      btn.textContent = label;
+    }
+  });
+}
+
+/* ============================================================
+   UI wiring (nav, scrollspy, reveal, filters)
+   ============================================================ */
+// mobile nav
+const side=document.getElementById('side'), backdrop=document.getElementById('backdrop'), menuBtn=document.getElementById('menuBtn');
+function closeNav(){side.classList.remove('open');backdrop.classList.remove('show');}
+menuBtn.addEventListener('click',()=>{side.classList.toggle('open');backdrop.classList.toggle('show');});
+backdrop.addEventListener('click',closeNav);
+
+// scrollspy
+const links=[...document.querySelectorAll('.nav-link')];
+const map={};
+links.forEach(l=>{const id=l.getAttribute('href').slice(1); (map[id]=map[id]||[]).push(l);});
+const sections=[...document.querySelectorAll('section')];
+const spy=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const id=e.target.id; if(map[id]) map[id].forEach(l=>l.classList.add('active'));
+    }
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+sections.forEach(s=>spy.observe(s));
+
+// close mobile nav on link tap
+links.forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=880) closeNav();}));
+document.querySelectorAll('.nav a[href^="#"]').forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=880) closeNav();}));
+
+// reveal
+const rev=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in'); rev.unobserve(e.target);}});
+},{rootMargin:'0px 0px -10% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
+
+// portfolio filter buttons
+const fbtns=[...document.querySelectorAll('.fbtn')];
+fbtns.forEach(b=>b.addEventListener('click',()=>{
+  fbtns.forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  bindFilters();
+}));
+
+// boot
+loadData();
+setupForm();
+</script>
+</body>
+</html>
