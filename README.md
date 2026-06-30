@@ -26,13 +26,11 @@ its own content and stays in sync automatically.
 | `styles.css`            | All styling + the Vertex purple theme. Shared by every page.     |
 | `app.js`                | Shared brain: password gate, sidebar/footer/modal, portfolio fetch, form. **Edit settings here** (see `CONFIG` at the top). |
 | `index.html`            | **Home** — what we do, why it matters, goals, and the Active Portfolio. |
-| `charter.html`          | Charter (purpose + scope)                                        |
-| `operating-model.html`  | Operating Model (request→close flow + prioritization model)      |
-| `governance.html`       | Governance (decision rights, forums, authority thresholds, escalation) |
+| `operating-model.html`  | Operating Model (request→close flow, prioritization, exception handling) |
+| `governance.html`       | Governance (decision-rights RACI, forums, escalation, change control) |
 | `delivery.html`         | Delivery (stage gates, artifacts/templates, status definitions)  |
 | `reporting.html`        | Reporting (metrics, report catalog, review cadence)              |
 | `improvement.html`      | Continuous Improvement (PDCA)                                    |
-| `roles.html`            | Roles & Capability                                               |
 | `apps-script.gs`        | **Optional** — only needed to make the intake form *save* submissions. |
 
 The "Submit a Project" button on any page opens the intake form as a **popup

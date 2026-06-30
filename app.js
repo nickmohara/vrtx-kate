@@ -93,13 +93,11 @@ function injectGate(){
    ============================================================ */
 const NAV_ITEMS = [
   { href:"index.html",            n:"00", label:"Home",            page:"home" },
-  { href:"charter.html",          n:"01", label:"Charter",         page:"charter" },
-  { href:"operating-model.html",  n:"02", label:"Operating Model", page:"operating" },
-  { href:"governance.html",       n:"03", label:"Governance",      page:"governance" },
-  { href:"delivery.html",         n:"04", label:"Delivery",        page:"delivery" },
-  { href:"reporting.html",        n:"05", label:"Reporting",       page:"reporting" },
-  { href:"improvement.html",      n:"06", label:"Improvement",     page:"improvement" },
-  { href:"roles.html",            n:"07", label:"Roles",           page:"roles" }
+  { href:"operating-model.html",  n:"01", label:"Operating Model", page:"operating" },
+  { href:"governance.html",       n:"02", label:"Governance",      page:"governance" },
+  { href:"delivery.html",         n:"03", label:"Delivery",        page:"delivery" },
+  { href:"reporting.html",        n:"04", label:"Reporting",       page:"reporting" },
+  { href:"improvement.html",      n:"05", label:"Improvement",     page:"improvement" }
 ];
 
 function buildSidebar(){
@@ -409,12 +407,31 @@ function wireUI(){
 }
 
 /* ============================================================
+   LOCAL DEV: bust page cache on localhost only
+   ------------------------------------------------------------
+   Embedded preview browsers aggressively cache plain page URLs.
+   On localhost we append a unique token to internal links so every
+   navigation loads fresh. On the live site this is a no-op, so
+   production keeps clean URLs and normal caching.
+   ============================================================ */
+function bustLocalLinks(){
+  const host = location.hostname;
+  if(host !== "localhost" && host !== "127.0.0.1") return;
+  const token = "_=" + (performance.timeOrigin + performance.now()).toString(36);
+  document.querySelectorAll('a[href]').forEach(a => {
+    const h = a.getAttribute("href");
+    if(h && /\.html$/.test(h)) a.setAttribute("href", h + (h.includes("?") ? "&" : "?") + token);
+  });
+}
+
+/* ============================================================
    BOOT
    ============================================================ */
 function boot(){
   buildSidebar();
   buildFooter();
   buildModal();
+  bustLocalLinks();
   wireUI();
   applyStats(CONFIG.STATS);   // populate KPI/stat elements on any page
   loadData();                 // portfolio pages also re-apply with derived counts
