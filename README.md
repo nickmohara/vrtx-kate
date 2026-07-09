@@ -25,8 +25,9 @@ its own content and stays in sync automatically.
 |-------------------------|------------------------------------------------------------------|
 | `styles.css`            | All styling + the Vertex purple theme. Shared by every page.     |
 | `app.js`                | Shared brain: password gate, sidebar/footer/modal, portfolio fetch, form. **Edit settings here** (see `CONFIG` at the top). |
-| `index.html`            | **Home** — what we do, why it matters, goals, and the Active Portfolio. |
-| `operating-model.html`  | Operating Model (request→close flow, prioritization, exception handling) |
+| `index.html`            | **Home** — mission, objectives, the five pillars, and the Active Portfolio. |
+| `our-focus.html`        | Our Focus — the five pillars every project traces to            |
+| `operating-model.html`  | Operating Model (flow, priority matrix + scoring, exception handling) |
 | `governance.html`       | Governance (decision-rights RACI, forums, escalation, change control) |
 | `delivery.html`         | Delivery (stage gates, artifacts/templates, status definitions)  |
 | `reporting.html`        | Reporting (metrics, report catalog, review cadence)              |

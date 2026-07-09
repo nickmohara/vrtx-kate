@@ -91,8 +91,11 @@ function injectGate(){
 /* ============================================================
    2. SHARED SHELL (sidebar · footer · modal)
    ============================================================ */
-const NAV_ITEMS = [
-  { href:"index.html",            n:"00", label:"Home",            page:"home" },
+const TOP_NAV = [
+  { href:"index.html",     n:"00", label:"Home",       page:"home" },
+  { href:"our-focus.html", n:"◆",  label:"Our Focus",  page:"focus" }
+];
+const FRAMEWORK_NAV = [
   { href:"operating-model.html",  n:"01", label:"Operating Model", page:"operating" },
   { href:"governance.html",       n:"02", label:"Governance",      page:"governance" },
   { href:"delivery.html",         n:"03", label:"Delivery",        page:"delivery" },
@@ -112,9 +115,9 @@ function buildSidebar(){
       <div class="sub">One front door for getting work into the department.</div>
     </div>
     <nav class="nav">
-      ${link(NAV_ITEMS[0])}
+      ${TOP_NAV.map(link).join("")}
       <div class="label">The Framework</div>
-      ${NAV_ITEMS.slice(1).map(link).join("")}
+      ${FRAMEWORK_NAV.map(link).join("")}
     </nav>
     <div class="foot">Vertex Pharmaceuticals · Internal use<br>Draft v0.2</div>`;
 }

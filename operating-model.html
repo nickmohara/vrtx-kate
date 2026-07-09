@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 <script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
 </head>
 <body data-page="operating">
@@ -37,19 +37,46 @@
         </div>
 
         <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">How priority is set</h4>
+        <p class="lede" style="margin-top:14px;">Every request is scored on two axes — the <strong style="color:var(--ink);font-weight:600;">value</strong> it creates and the <strong style="color:var(--ink);font-weight:600;">ease</strong> of delivering it — then placed on the priority matrix.</p>
+
+        <div class="matrix">
+          <div class="m-yl">High value</div>
+          <div class="quad quad-bet"><span class="quad-tag">Strategic bet</span><span class="quad-meta">High value · Low ease</span><p>Material upside, but requires sequencing or investment.</p></div>
+          <div class="quad quad-win"><span class="quad-tag">Quick win</span><span class="quad-meta">High value · High ease</span><p>Strong impact with limited complexity — build early momentum here.</p></div>
+          <div class="m-yl">Low value</div>
+          <div class="quad quad-stop"><span class="quad-tag">Defer / Stop</span><span class="quad-meta">Low value · Low ease</span><p>Effort outweighs benefit.</p></div>
+          <div class="quad quad-reeval"><span class="quad-tag">Re-evaluate</span><span class="quad-meta">Low value · High ease</span><p>Tempting because it's easy, but confirm the value case before committing.</p></div>
+          <div class="m-corner"></div>
+          <div class="m-xl">Low ease</div>
+          <div class="m-xl">High ease</div>
+        </div>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Scoring dimensions</h4>
+        <p class="lede" style="margin-top:14px;"><strong style="color:var(--ink);font-weight:600;">Value score (1–5)</strong> — rooted in the five pillars (5 = highest value, 1 = lowest).</p>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Criterion</th><th>Guiding question</th><th style="width:90px;">Weight</th></tr></thead>
+            <thead><tr><th style="width:36%;">Criteria</th><th>What it means</th></tr></thead>
             <tbody>
-              <tr><td>Strategic alignment</td><td>Does it advance department goals?</td><td class="mono">30%</td></tr>
-              <tr><td>Risk &amp; compliance</td><td>Does it reduce safety, regulatory, or security risk?</td><td class="mono">25%</td></tr>
-              <tr><td>Business impact</td><td>Cost, capacity, or efficiency gain if done.</td><td class="mono">20%</td></tr>
-              <tr><td>Urgency</td><td>Is there a real, externally-driven deadline?</td><td class="mono">15%</td></tr>
-              <tr><td>Feasibility</td><td>Can it realistically be delivered with current capacity?</td><td class="mono">10%</td></tr>
+              <tr><td>Risk &amp; Compliance Reduction</td><td>How much the project reduces safety, regulatory, or operational risk exposure.</td></tr>
+              <tr><td>Growth &amp; Scalability</td><td>Contribution to capacity, future flexibility, or the ability to scale.</td></tr>
+              <tr><td>Operational Efficiency</td><td>Expected improvement to cost, cycle time, or process performance.</td></tr>
+              <tr><td>Facilities &amp; Asset Performance</td><td>Impact on the condition, reliability, or lifecycle value of physical assets and space.</td></tr>
+              <tr><td>Workplace Experience &amp; Culture</td><td>Effect on employee experience, satisfaction, or the culture the workplace supports.</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="snapshot-note" style="text-align:left;margin-top:10px;">Sample weights — tune to what leadership values, summing to 100%.</p>
+        <p class="lede" style="margin-top:24px;"><strong style="color:var(--ink);font-weight:600;">Ease score (1–5)</strong> — how straightforward the project is to execute (5 = easiest, 1 = hardest).</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th style="width:36%;">Criteria</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td>Resource &amp; Budget Availability</td><td>Whether funding, staffing, and capital are already accessible or need to be secured.</td></tr>
+              <tr><td>Stakeholder &amp; Approval Complexity</td><td>Number of approvals, cross-functional dependencies, or competing priorities involved.</td></tr>
+              <tr><td>Data &amp; System Readiness</td><td>Whether the data, systems, or infrastructure needed already exist and are reliable.</td></tr>
+              <tr><td>Change Readiness</td><td>How much process change or behavior change is required from the teams affected.</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <p class="lede" style="margin-top:46px;">Decision rights, governance forums, escalation path and change control live on the <a href="governance.html" style="color:var(--signal);border-bottom:1px solid var(--signal-line);">Governance</a> page.</p>
 
@@ -67,6 +94,6 @@
   </main>
 </div>
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

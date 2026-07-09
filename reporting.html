@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 <script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
 </head>
 <body data-page="reporting">
@@ -54,11 +54,25 @@
           <div class="cad"><div class="when">MONTHLY</div><div class="what"><strong>Portfolio &amp; performance review</strong><span>Review status, metrics, and priorities with leadership.</span></div></div>
           <div class="cad"><div class="when">QUARTERLY</div><div class="what"><strong>Strategy &amp; framework review</strong><span>Reassess goals, scoring weights, SOPs, and what to build next.</span></div></div>
         </div>
+
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Status definitions</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Status</th><th>What it means</th><th style="width:140px;">Shown as</th></tr></thead>
+            <tbody>
+              <tr><td>In triage</td><td>Submitted; awaiting accept / score / owner.</td><td><span class="pill triage">In triage</span></td></tr>
+              <tr><td>In progress</td><td>Accepted and chartered; actively being delivered.</td><td><span class="pill prog">In progress</span></td></tr>
+              <tr><td>On hold</td><td>Paused — blocked, deprioritized, or awaiting input.</td><td><span class="pill hold">On hold</span></td></tr>
+              <tr><td>Done</td><td>Outcome delivered and accepted; closed.</td><td><span class="pill done">Done</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">These statuses drive the pills and filters on the <a href="index.html" style="color:var(--signal);border-bottom:1px solid var(--signal-line);">Active Portfolio</a>.</p>
       </div>
     </section>
   </main>
 </div>
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
