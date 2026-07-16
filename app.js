@@ -312,7 +312,9 @@ function rowsToPortfolio(rows){
   if(!rows.length) return [];
   const head = rows[0].map(h => h.trim().toLowerCase());
   const at = name => head.indexOf(name);
-  const iP = at('project'), iD = at('domain'), iO = at('owner'), iPr = at('priority'), iS = at('status');
+  // the 2nd column may be headed "Pillar" (new) or "Domain" (old) — accept either
+  const iP = at('project'), iD = at('pillar') !== -1 ? at('pillar') : at('domain'),
+        iO = at('owner'), iPr = at('priority'), iS = at('status');
   return rows.slice(1)
     .filter(r => r.join("").trim() !== "")
     .map(r => ({
