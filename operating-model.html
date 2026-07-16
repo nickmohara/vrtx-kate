@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
 </head>
 <body data-page="operating">
@@ -32,7 +32,7 @@
           <div class="step"><div class="num">01</div><div class="t">Intake</div><div class="x">Request submitted through the form.</div></div>
           <div class="step"><div class="num">02</div><div class="t">Triage</div><div class="x">Reviewed, scored, decided — within 5 business days.</div></div>
           <div class="step"><div class="num">03</div><div class="t">Charter</div><div class="x">Scope, outcome, owner, and milestones defined.</div></div>
-          <div class="step"><div class="num">04</div><div class="t">Delivery</div><div class="x">Project team executes; status tracked and unblocked.</div></div>
+          <div class="step"><div class="num">04</div><div class="t">Delivery</div><div class="x">Project team executes; progress tracked, blockers cleared.</div></div>
           <div class="step"><div class="num">05</div><div class="t">Close</div><div class="x">Outcome confirmed; lessons captured.</div></div>
         </div>
 
@@ -41,27 +41,26 @@
 
         <div class="matrix">
           <div class="m-yl">High value</div>
-          <div class="quad quad-bet"><span class="quad-tag">Strategic bet</span><span class="quad-meta">High value · Low ease</span><p>Material upside, but requires sequencing or investment.</p></div>
-          <div class="quad quad-win"><span class="quad-tag">Quick win</span><span class="quad-meta">High value · High ease</span><p>Strong impact with limited complexity — build early momentum here.</p></div>
+          <div class="quad quad-bet"><span class="quad-tag">Plan &amp; invest</span><span class="quad-meta">High value · Low ease</span><p>Worth doing, but needs sufficient planning and time commitment.</p></div>
+          <div class="quad quad-win"><span class="quad-tag">Quick win</span><span class="quad-meta">High value · High ease</span><p>High impact and easy to do — prioritize these first.</p></div>
           <div class="m-yl">Low value</div>
-          <div class="quad quad-stop"><span class="quad-tag">Defer / Stop</span><span class="quad-meta">Low value · Low ease</span><p>Effort outweighs benefit.</p></div>
-          <div class="quad quad-reeval"><span class="quad-tag">Re-evaluate</span><span class="quad-meta">Low value · High ease</span><p>Tempting because it's easy, but confirm the value case before committing.</p></div>
+          <div class="quad quad-stop"><span class="quad-tag">Defer / Stop</span><span class="quad-meta">Low value · Low ease</span><p>Takes more effort than it's worth — do not pursue.</p></div>
+          <div class="quad quad-reeval"><span class="quad-tag">Confirm value</span><span class="quad-meta">Low value · High ease</span><p>Easy to do, but confirm it is worth doing before committing.</p></div>
           <div class="m-corner"></div>
           <div class="m-xl">Low ease</div>
           <div class="m-xl">High ease</div>
         </div>
 
         <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Scoring dimensions</h4>
-        <p class="lede" style="margin-top:14px;"><strong style="color:var(--ink);font-weight:600;">Value score (1–5)</strong> — rooted in the five pillars (5 = highest value, 1 = lowest).</p>
+        <p class="lede" style="margin-top:14px;"><strong style="color:var(--ink);font-weight:600;">Value score (1–5)</strong> — how much benefit the project delivers (5 = highest value, 1 = lowest).</p>
         <div class="tbl-wrap">
           <table>
             <thead><tr><th style="width:36%;">Criteria</th><th>What it means</th></tr></thead>
             <tbody>
-              <tr><td>Risk &amp; Compliance Reduction</td><td>How much the project reduces safety, regulatory, or operational risk exposure.</td></tr>
-              <tr><td>Growth &amp; Scalability</td><td>Contribution to capacity, future flexibility, or the ability to scale.</td></tr>
-              <tr><td>Operational Efficiency</td><td>Expected improvement to cost, cycle time, or process performance.</td></tr>
-              <tr><td>Facilities &amp; Asset Performance</td><td>Impact on the condition, reliability, or lifecycle value of physical assets and space.</td></tr>
-              <tr><td>Workplace Experience &amp; Culture</td><td>Effect on employee experience, satisfaction, or the culture the workplace supports.</td></tr>
+              <tr><td>Strategic Alignment</td><td>How strongly the project serves the pillar it maps to — Risk &amp; Compliance, Growth &amp; Scalability, Operational Efficiency, Facilities &amp; Asset Performance, or Workplace Experience &amp; Culture.</td></tr>
+              <tr><td>Financial Impact</td><td>Expected cost savings, cost avoidance, or revenue protection.</td></tr>
+              <tr><td>Urgency / Cost of Inaction</td><td>How much worse the problem gets — or how much value is lost — if the project is deferred.</td></tr>
+              <tr><td>Breadth of Impact</td><td>How many teams, sites, or people benefit from the project.</td></tr>
             </tbody>
           </table>
         </div>
@@ -94,6 +93,6 @@
   </main>
 </div>
 
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>

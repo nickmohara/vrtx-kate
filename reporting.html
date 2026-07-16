@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
 </head>
 <body data-page="reporting">
@@ -30,30 +30,25 @@
         <h4 style="font-size:15px;margin-top:36px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">What we measure</h4>
         <div class="kpis">
           <div class="kpi"><div class="k">Intake response time</div><div class="v"><span data-stat="intakeResponseDays">—</span><small style="font-size:16px;color:var(--muted);"> days</small></div><div class="meta" data-stat="intakeResponseMeta">Target ≤ 5 days</div><div class="bar"><i class="g" data-bar="intakeResponseBar" style="width:0;"></i></div></div>
-          <div class="kpi"><div class="k">Process standardized</div><div class="v"><span data-stat="processStandardizedPct">—</span><small style="font-size:16px;color:var(--muted);">%</small></div><div class="meta" data-stat="processStandardizedMeta">Of recurring work on SOPs</div><div class="bar"><i data-bar="processStandardizedBar" style="width:0;"></i></div></div>
+          <div class="kpi"><div class="k">Requests triaged</div><div class="v">0</div><div class="meta">total to date</div></div>
+          <div class="kpi"><div class="k">Active charters</div><div class="v">0</div><div class="meta">scoped &amp; in delivery</div></div>
+          <div class="kpi"><div class="k">Where we're working</div><div class="v">0<small style="font-size:16px;color:var(--muted);">/5</small></div><div class="meta">pillars with an active project</div></div>
         </div>
-        <p class="snapshot-note" style="text-align:left;margin-top:10px;">Live portfolio counts (active, in triage) are on the <a href="index.html" style="color:var(--signal);border-bottom:1px solid var(--signal-line);">Home</a> snapshot, pulled from the sheet.</p>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">Live portfolio counts (active, in triage, completed) are on the <a href="index.html" style="color:var(--signal);border-bottom:1px solid var(--signal-line);">Home</a> snapshot, pulled from the sheet.</p>
 
-        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">The reports</h4>
+        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Reporting &amp; review cadence</h4>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Report</th><th>Audience</th><th>Cadence</th><th>Contains</th></tr></thead>
+            <thead><tr><th>Report</th><th>Audience</th><th>Cadence</th><th>Review focus</th></tr></thead>
             <tbody>
-              <tr><td>Active Portfolio</td><td>Everyone</td><td class="mono">Live</td><td>Every active and incoming project, with status, owner, and priority.</td></tr>
-              <tr><td>Triage log</td><td>OpEx + project leads</td><td class="mono">Weekly</td><td>New requests, decisions, and scores from the week.</td></tr>
-              <tr><td>Portfolio &amp; performance pack</td><td>Leadership</td><td class="mono">Monthly</td><td>Status by domain, KPI trend, risks, and reprioritization asks.</td></tr>
-              <tr><td>Strategy review</td><td>Leadership</td><td class="mono">Quarterly</td><td>Goal progress, scoring-weight changes, and the roadmap.</td></tr>
+              <tr><td>Active portfolio</td><td>Everyone</td><td class="mono">Live</td><td>N/A, live document — no standing review.</td></tr>
+              <tr><td>Triage log</td><td>OpEx team + project leads</td><td class="mono">Weekly</td><td>Process new requests, set priorities, unblock active work.</td></tr>
+              <tr><td>Portfolio summary</td><td>Operations &amp; RE LT</td><td class="mono">Monthly</td><td>Review status, metrics, and priorities with leadership.</td></tr>
+              <tr><td>Strategy &amp; framework overview</td><td>Operations &amp; RE LT</td><td class="mono">Quarterly</td><td>Reassess goals, scoring changes, SOPs, and roadmap.</td></tr>
             </tbody>
           </table>
         </div>
         <p class="snapshot-note" style="text-align:left;margin-top:10px;">The Active Portfolio is the single source — every other report rolls up from the same sheet.</p>
-
-        <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Review cadence</h4>
-        <div class="cadence">
-          <div class="cad"><div class="when">WEEKLY</div><div class="what"><strong>Intake &amp; triage review</strong><span>Process new requests, set priorities, unblock active work.</span></div></div>
-          <div class="cad"><div class="when">MONTHLY</div><div class="what"><strong>Portfolio &amp; performance review</strong><span>Review status, metrics, and priorities with leadership.</span></div></div>
-          <div class="cad"><div class="when">QUARTERLY</div><div class="what"><strong>Strategy &amp; framework review</strong><span>Reassess goals, scoring weights, SOPs, and what to build next.</span></div></div>
-        </div>
 
         <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Status definitions</h4>
         <div class="tbl-wrap">
@@ -73,6 +68,6 @@
   </main>
 </div>
 
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>

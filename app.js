@@ -22,10 +22,9 @@ const CONFIG = {
 
   /* Headline numbers not derived from the portfolio (edit freely). */
   STATS: {
-    avgResponse:"2.4", avgResponseNote:"to first reply · SLA 5d",
-    activeProjectsNote:"across all domains", inTriageNote:"awaiting prioritization",
-    intakeResponseDays:"2.4", intakeResponseMeta:"Target ≤ 5 days", intakeResponseBar:"52",
-    processStandardizedPct:"45", processStandardizedMeta:"Of recurring work on SOPs", processStandardizedBar:"45"
+    activeProjectsNote:"across all pillars", inTriageNote:"awaiting prioritization",
+    projectsCompletedNote:"total to date",
+    intakeResponseDays:"2.4", intakeResponseMeta:"Target ≤ 5 days", intakeResponseBar:"52"
   }
 };
 const SHEET_CSV_URL = CONFIG.SHEET_CSV_URL;
@@ -112,7 +111,7 @@ function buildSidebar(){
     <div class="brand">
       <div class="eyebrow">Vertex · Operations &amp; Real Estate</div>
       <h1>Operational<br>Excellence</h1>
-      <div class="sub">One front door for getting work into the department.</div>
+      <div class="sub">Vertex · Operations &amp; Real Estate</div>
     </div>
     <nav class="nav">
       ${TOP_NAV.map(link).join("")}
@@ -131,7 +130,7 @@ function buildFooter(){
     <div class="wrap">
       <div>
         <div class="eyebrow">Operational Excellence</div>
-        <p style="margin-top:10px;">Vertex · Operations &amp; Real Estate — one front door for the department's work.</p>
+        <p style="margin-top:10px;">Vertex · Operations &amp; Real Estate.</p>
       </div>
       <div class="r">Internal use · Draft v0.2<br>Owner: [Your name / title]</div>
     </div>`;
@@ -340,8 +339,9 @@ function renderPortfolio(rows){
 function applyStats(stats, portfolio){
   const s = Object.assign({}, stats);
   if(portfolio){
-    if(s.activeProjects == null) s.activeProjects = portfolio.filter(r => r.status === "In progress").length;
-    if(s.inTriage == null)       s.inTriage       = portfolio.filter(r => r.status === "In triage").length;
+    if(s.activeProjects == null)    s.activeProjects    = portfolio.filter(r => r.status === "In progress").length;
+    if(s.inTriage == null)          s.inTriage          = portfolio.filter(r => r.status === "In triage").length;
+    if(s.projectsCompleted == null) s.projectsCompleted = portfolio.filter(r => r.status === "Done").length;
   }
   document.querySelectorAll("[data-stat]").forEach(el => {
     const k = el.dataset.stat;

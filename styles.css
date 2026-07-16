@@ -270,6 +270,12 @@ html.gate-lock body > *:not(.gate){visibility:hidden;}
   .matrix .m-yl,.matrix .m-xl,.matrix .m-corner{display:none;}
 }
 
+/* home "what our work advances" pillar list */
+.pillars{list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:10px; max-width:560px;}
+.pillars li{display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--line); border-radius:var(--r-sm); padding:13px 16px; box-shadow:var(--shadow); font-family:"Space Grotesk",sans-serif; font-weight:500; font-size:15px; color:var(--ink); transition:transform .14s, box-shadow .2s, border-color .2s;}
+.pillars li:hover{transform:translateX(3px); border-color:#DDD2E6;}
+.pillars li .pn{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--signal); font-weight:500; letter-spacing:.06em; min-width:20px;}
+
 /* footer */
 .pagefoot{background:var(--ink); color:#9387A6; padding:34px 0; margin-top:auto;}
 .pagefoot .wrap{display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;}

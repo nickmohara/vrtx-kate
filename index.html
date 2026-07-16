@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
 </head>
 <body data-page="home">
@@ -37,9 +37,9 @@
         </div>
 
         <div class="snapshot">
-          <div class="snap"><div class="k">Active projects</div><div class="v"><span data-stat="activeProjects">—</span></div><div class="d" data-stat="activeProjectsNote">across all domains</div></div>
+          <div class="snap"><div class="k">Active projects</div><div class="v"><span data-stat="activeProjects">—</span></div><div class="d" data-stat="activeProjectsNote">across all pillars</div></div>
           <div class="snap"><div class="k">In triage</div><div class="v"><span data-stat="inTriage">—</span></div><div class="d" data-stat="inTriageNote">awaiting prioritization</div></div>
-          <div class="snap"><div class="k">Avg. response</div><div class="v"><span data-stat="avgResponse">—</span><small>d</small></div><div class="d" data-stat="avgResponseNote">to first reply · SLA 5d</div></div>
+          <div class="snap"><div class="k">Projects completed</div><div class="v"><span data-stat="projectsCompleted">—</span></div><div class="d" data-stat="projectsCompletedNote">total to date</div></div>
         </div>
         <div class="snapshot-note">▦ live snapshot · pulls from the active portfolio below</div>
       </div>
@@ -55,7 +55,7 @@
           <div class="card"><span class="tag">Objective 01</span><h4>Streamline and standardize how work gets done</h4><p>A transparent scoring model and reusable delivery processes — so projects move from request to result without reinvention each time.</p></div>
           <div class="card"><span class="tag">Objective 02</span><h4>Focus effort on the highest-value problems</h4><p>Projects are prioritized by value and ease, so limited capacity goes to the work that moves efficiency, quality, and cost.</p></div>
           <div class="card"><span class="tag">Objective 03</span><h4>Make improvements that last</h4><p>Build solutions that hold after the project closes — documented, owned, and measured for lasting impact.</p></div>
-          <div class="card"><span class="tag">Objective 04</span><h4>Drive adoption across the team</h4><p>Grow operational excellence practices across Operations &amp; Real Estate, so OE becomes part of how the team operates.</p></div>
+          <div class="card"><span class="tag">Objective 04</span><h4>Drive adoption across the team</h4><p>Grow operational excellence practices across Operations &amp; Real Estate, so OpEx becomes part of how the team operates.</p></div>
         </div>
         <div class="actions" style="margin-top:30px;">
           <a class="btn btn-primary" data-open-intake>
@@ -71,13 +71,13 @@
       <div class="wrap reveal">
         <div class="eyebrow">What our work advances</div>
         <h3 class="sec-h">Five pillars. Every project traces to one.</h3>
-        <div class="scope">
-          <span class="chip"><span class="dot"></span>Compliance &amp; Risk</span>
-          <span class="chip"><span class="dot"></span>Growth &amp; Scalability</span>
-          <span class="chip"><span class="dot"></span>Operational Efficiency</span>
-          <span class="chip"><span class="dot"></span>Facilities &amp; Asset Performance</span>
-          <span class="chip"><span class="dot"></span>Workplace Experience &amp; Culture</span>
-        </div>
+        <ul class="pillars">
+          <li><span class="pn">01</span>Compliance &amp; Risk</li>
+          <li><span class="pn">02</span>Growth &amp; Scalability</li>
+          <li><span class="pn">03</span>Operational Efficiency</li>
+          <li><span class="pn">04</span>Facilities &amp; Asset Performance</li>
+          <li><span class="pn">05</span>Workplace Experience &amp; Culture</li>
+        </ul>
         <p class="snapshot-note" style="text-align:left;margin-top:16px;">See the <a href="our-focus.html" style="color:var(--signal);border-bottom:1px solid var(--signal-line);">Our Focus</a> page for additional detail.</p>
       </div>
     </section>
@@ -87,7 +87,7 @@
       <div class="wrap reveal">
         <div class="eyebrow">▦ Active Portfolio</div>
         <h3 class="sec-h">Where everything stands</h3>
-        <p class="lede">A live view of active and incoming work across every domain. Filter by status to see what's moving.</p>
+        <p class="lede">A live view of active and incoming work across every pillar. Filter by status to see what's moving.</p>
         <div class="filters">
           <span class="fl">Filter</span>
           <button class="fbtn on" data-f="all">All</button>
@@ -98,7 +98,7 @@
         </div>
         <div class="tbl-wrap">
           <table id="portfolioTbl">
-            <thead><tr><th>Project</th><th>Domain</th><th>Owner</th><th>Priority</th><th>Status</th></tr></thead>
+            <thead><tr><th>Project</th><th>Pillar</th><th>Owner</th><th>Priority</th><th>Status</th></tr></thead>
             <tbody>
               <tr class="tbl-state"><td colspan="5">Loading portfolio…</td></tr>
             </tbody>
@@ -111,6 +111,6 @@
   </main>
 </div>
 
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>
