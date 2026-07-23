@@ -63,7 +63,7 @@ section:last-child{border-bottom:none;}
 .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--signal); display:flex; align-items:center; gap:10px;}
 .eyebrow::before{content:""; width:22px; height:1px; background:var(--signal-line);}
 .sec-h{font-size:30px; font-weight:600; margin:16px 0 14px; letter-spacing:-.02em;}
-.lede{font-size:16.5px; color:var(--muted); max-width:62ch; line-height:1.62;}
+.lede{font-size:16.5px; color:var(--muted); max-width:74ch; line-height:1.62;}
 
 /* ---------- hero ---------- */
 .hero{
@@ -276,6 +276,20 @@ html.gate-lock body > *:not(.gate){visibility:hidden;}
 .pillars li{display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--line); border-radius:var(--r-sm); padding:13px 16px; box-shadow:var(--shadow); font-family:"Space Grotesk",sans-serif; font-weight:500; font-size:15px; color:var(--ink); transition:transform .14s, box-shadow .2s, border-color .2s;}
 .pillars li:hover{transform:translateX(3px); border-color:#DDD2E6;}
 .pillars li .pn{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--signal); font-weight:500; letter-spacing:.06em; min-width:20px;}
+
+/* clickable flow steps → popup */
+.step-pop{cursor:pointer;}
+.step-pop .t{transition:color .14s;}
+.step-pop:hover .t{color:var(--signal);}
+.step-hint{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--signal); margin-top:7px; opacity:.85; transition:opacity .14s;}
+.step-pop:hover .step-hint{opacity:1;}
+
+/* governance roles table */
+.roles-tbl td:first-child{font-weight:600; color:var(--ink);}
+.roles-tbl .role-sub{display:block; font-weight:400; font-size:12.5px; color:var(--muted); margin-top:3px;}
+
+/* Our Focus: vertically center pillar name + description in each row */
+.prin dt, .prin dd{display:flex; flex-direction:column; justify-content:center;}
 
 /* footer */
 .pagefoot{background:var(--ink); color:#9387A6; padding:34px 0; margin-top:auto;}

@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 <script>(function(){try{if(document.cookie.indexOf('opex_auth=cf7ac5ef7e393ce051627d85c68a730365caf597db6e57ef596de38b4ebc416e')<0)document.documentElement.classList.add('gate-lock');}catch(e){document.documentElement.classList.add('gate-lock');}})();</script>
 </head>
 <body data-page="governance">
@@ -29,44 +29,46 @@
 
         <h4 style="font-size:15px;margin-top:36px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Decision rights</h4>
         <div class="tbl-wrap">
-          <table class="raci-tbl">
-            <thead><tr><th style="width:34%;">Phase / Activity</th><th style="text-align:center;">OpEx Lead</th><th style="text-align:center;">OpEx Owner</th><th style="text-align:center;">Operations &amp; RE LT</th><th style="text-align:center;">Project Team</th></tr></thead>
+          <table class="roles-tbl">
+            <thead><tr><th style="width:32%;">Role</th><th>Responsibility</th></tr></thead>
             <tbody>
-              <tr><td>Define — Intake, selection &amp; charter</td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci R">R</span></td></tr>
-              <tr><td>Deliver — Planning, execution &amp; stage-gate reviews</td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci R">R</span></td></tr>
-              <tr><td>Close — Benefit validation, closure &amp; handoff</td><td style="text-align:center;"><span class="raci R">R</span></td><td style="text-align:center;"><span class="raci A">A</span></td><td style="text-align:center;"><span class="raci C">C</span></td><td style="text-align:center;"><span class="raci C">C</span></td></tr>
+              <tr><td>Executive Sponsor<span class="role-sub">Operations &amp; RE VP</span></td><td>Ensures the OpEx function stays aligned to functional goals, owns final sign-off on portfolio prioritization and strategy &amp; framework changes, and serves as the final escalation point when decisions exceed the project sponsor's authority.</td></tr>
+              <tr><td>Operations &amp; RE LT</td><td>Governs the portfolio collectively — aligning on priorities, resourcing, and strategy at the monthly portfolio review and quarterly strategy &amp; framework review.</td></tr>
+              <tr><td>Project Sponsor<span class="role-sub">Operations &amp; RE LT member</span></td><td>Accountable for strategic alignment, key decisions, removing roadblocks, and ensuring the project delivers its intended business value.</td></tr>
+              <tr><td>Project Team</td><td>Executes the project deliverables in accordance with the approved charter — the individuals doing the work, tracking progress and managing blockers.</td></tr>
+              <tr><td>OpEx Team</td><td>Owns the day-to-day operation of the OpEx function, maintains and continuously improves the OpEx framework, manages the portfolio governance process, facilitates review forums, and guides projects through the operating model from intake to close.</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="snapshot-note" style="text-align:left;margin-top:10px;">R Responsible · A Accountable · C Consulted · I Informed</p>
 
         <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Governance forums</h4>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Forum</th><th>Cadence</th><th>Chair</th><th>Decides</th></tr></thead>
+            <thead><tr><th>Forum</th><th>Cadence</th><th>Decides</th></tr></thead>
             <tbody>
-              <tr><td>Intake &amp; Triage Review</td><td class="mono">Weekly</td><td>OpEx Lead</td><td>Accept / decline, score, and prioritize new requests; unblock active work. Exceptions needing LT input are escalated from this forum.</td></tr>
-              <tr><td>Portfolio Review</td><td class="mono">Monthly</td><td>OpEx Lead + Owner</td><td>Status updates, reprioritization, resourcing, and stage-gate go / no-go decisions. Includes benefit validation and closure / handoff review with Operations &amp; RE LT.</td></tr>
-              <tr><td>Strategy &amp; Framework Review</td><td class="mono">Quarterly</td><td>OpEx Lead + Owner</td><td>Goals, scoring weights, SOPs, and the roadmap of what to build next. Operations &amp; RE LT weigh in on any proposed changes.</td></tr>
+              <tr><td>Intake &amp; Triage Review</td><td class="mono">Weekly</td><td>Accept / decline, score, and prioritize new requests; unblock active work. Exceptions needing Operations &amp; RE LT input are escalated from this forum.</td></tr>
+              <tr><td>Portfolio Review</td><td class="mono">Monthly</td><td>Status updates, reprioritization, resourcing, and stage-gate go / no-go decisions. Includes benefit validation and closure / handoff review with Operations &amp; RE LT.</td></tr>
+              <tr><td>Strategy &amp; Framework Review</td><td class="mono">Quarterly</td><td>Goals, scoring weights, SOPs, and the roadmap of what to build next. Operations &amp; RE LT weigh in on any proposed changes.</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="snapshot-note" style="text-align:left;margin-top:10px;">All forums are led by the OpEx team.</p>
 
         <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Escalation path</h4>
         <div class="flow">
           <div class="step"><div class="num">01</div><div class="t">Raise</div><div class="x">Project team flags the blocker on the project, with impact and the decision needed.</div></div>
           <div class="step"><div class="num">02</div><div class="t">Project lead</div><div class="x">Resolves within 2 business days where it's theirs to call.</div></div>
-          <div class="step"><div class="num">03</div><div class="t">OpEx Lead</div><div class="x">Assesses and resolves at the weekly triage review if the project lead is not able to solution.</div></div>
-          <div class="step"><div class="num">04</div><div class="t">Operations &amp; RE LT</div><div class="x">Only true exceptions — money, risk, or conflicting priorities.</div></div>
+          <div class="step"><div class="num">03</div><div class="t">OpEx Team</div><div class="x">Assesses and resolves at the weekly triage review if the project lead is not able to solution.</div></div>
+          <div class="step"><div class="num">04</div><div class="t">Project / Executive Sponsor</div><div class="x">Only true exceptions — money, risk, or conflicting priorities.</div></div>
         </div>
 
         <h4 style="font-size:15px;margin-top:46px;color:var(--slate);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:500;">Change control</h4>
-        <p class="lede" style="margin-top:14px;">Any in-flight request must submit a change request if it impacts timeline, budget, scope, resource allocation, and/or compliance obligation. The OpEx Lead + Owner will assess the proposed change before moving forward, and consult Operations &amp; RE LT if needed.</p>
+        <p class="lede" style="margin-top:14px;">Any in-flight request must submit a change request if it impacts timeline, budget, scope, resource allocation, and/or compliance obligation. The OpEx team will assess the proposed change and consult the appropriate governing bodies before a final decision is made.</p>
       </div>
     </section>
   </main>
 </div>
 
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

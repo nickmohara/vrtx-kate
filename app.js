@@ -22,7 +22,7 @@ const CONFIG = {
 
   /* Headline numbers not derived from the portfolio (edit freely). */
   STATS: {
-    activeProjectsNote:"across all pillars", inTriageNote:"awaiting prioritization",
+    activeProjectsNote:"across all projects", inTriageNote:"awaiting prioritization",
     projectsCompletedNote:"total to date",
     intakeResponseDays:"2.4", intakeResponseMeta:"Target ≤ 5 days", intakeResponseBar:"52"
   }
@@ -137,140 +137,41 @@ function buildFooter(){
   main.appendChild(foot);
 }
 
-const INTAKE_FIELDS = `
-  <div class="frow">
-    <div class="field"><label for="f-name">Your name <span class="req">*</span></label><input id="f-name" name="name" type="text" placeholder="Full name" required /></div>
-    <div class="field"><label for="f-department">Department <span class="req">*</span></label><input id="f-department" name="department" type="text" placeholder="e.g. Facilities" required /></div>
-  </div>
-  <div class="frow">
-    <div class="field"><label for="f-title">Project title <span class="req">*</span></label><input id="f-title" name="title" type="text" placeholder="Short, scannable name" required /></div>
-    <div class="field"><label for="f-domain">Domain <span class="req">*</span></label>
-      <select id="f-domain" name="domain" required><option value="" disabled selected>Choose a domain…</option><option>Engineering</option><option>Capital Projects</option><option>Facilities</option><option>Lab Oversight</option><option>Real Estate</option><option>Global Security</option><option>Other</option></select>
-    </div>
-  </div>
-  <div class="field full" style="margin-bottom:18px;"><label for="f-problem">Problem statement <span class="req">*</span></label><textarea id="f-problem" name="problem" placeholder="What are you trying to solve? (Describe the problem, not the solution.)" required></textarea></div>
-  <div class="field full" style="margin-bottom:18px;"><label for="f-outcome">Desired outcome</label><textarea id="f-outcome" name="outcome" placeholder="What does 'done and good' look like?"></textarea></div>
-  <div class="frow">
-    <div class="field"><label for="f-driver">Business driver</label>
-      <select id="f-driver" name="driver"><option value="" disabled selected>Select…</option><option>Compliance</option><option>Cost</option><option>Capacity</option><option>Risk</option><option>Growth</option><option>Other</option></select>
-    </div>
-    <div class="field"><label for="f-timeline">Target timeline</label><input id="f-timeline" name="timeline" type="text" placeholder="Any hard deadlines?" /></div>
-  </div>
-  <div class="frow">
-    <div class="field"><label for="f-sponsor">Sponsor / stakeholders</label><input id="f-sponsor" name="sponsor" type="text" placeholder="Who backs this work?" /></div>
-    <div class="field"><label for="f-priority">Your view of priority</label>
-      <select id="f-priority" name="priority"><option value="" disabled selected>Select…</option><option>High</option><option>Medium</option><option>Low</option></select>
-    </div>
-  </div>`;
-
+/* ============================================================
+   3. MODAL (generic — Meet the team + step-description popups)
+   ============================================================ */
 function buildModal(){
   const el = document.createElement("div");
   el.className = "modal-backdrop";
-  el.id = "intakeModal";
+  el.id = "appModal";
   el.innerHTML = `
-    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit a project">
+    <div class="modal" role="dialog" aria-modal="true">
       <div class="modal-head">
         <div>
-          <div class="eyebrow">▤ Submit a Project</div>
-          <h3>Tell us what you need</h3>
-          <p>One form, any domain. You'll get a first response within 5 business days — every time.</p>
+          <div class="eyebrow" id="modalEyebrow"></div>
+          <h3 id="modalTitle"></h3>
         </div>
         <button class="modal-close" id="modalClose" aria-label="Close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-      <div class="modal-body">
-        <form id="intakeForm" novalidate>
-          ${INTAKE_FIELDS}
-          <div class="modal-foot">
-            <p class="note">Submitting logs your request and starts the clock on triage.</p>
-            <button type="submit" class="btn btn-primary" id="submitBtn">Submit request</button>
-          </div>
-          <p class="form-error" id="formError">Please fill in the required fields marked with *.</p>
-        </form>
-        <div class="confirm" id="confirm" style="margin-top:20px;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-          <div><strong>Request received.</strong><p id="confirmMsg">It's in the queue for triage. You'll get a first response within 5 business days.</p></div>
-        </div>
-      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>`;
   document.body.appendChild(el);
-  wireModal(el);
-}
-
-function openModal(){
-  const m = document.getElementById("intakeModal");
-  if(m){ m.classList.add("show"); m.querySelector("#f-name")?.focus(); }
-}
-function closeModal(){
-  document.getElementById("intakeModal")?.classList.remove("show");
-}
-
-function wireModal(el){
   el.querySelector("#modalClose").addEventListener("click", closeModal);
   el.addEventListener("click", e => { if(e.target === el) closeModal(); });
   document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
-  setupForm(el);
 }
-
-/* ============================================================
-   3. INTAKE FORM
-   ============================================================ */
-function canWrite(){
-  return CONFIG.WRITE_URL && !CONFIG.WRITE_URL.startsWith("PASTE_");
+function openModal(title, bodyHTML, eyebrow){
+  const m = document.getElementById("appModal");
+  if(!m) return;
+  m.querySelector("#modalEyebrow").textContent = eyebrow || "";
+  m.querySelector("#modalTitle").textContent = title || "";
+  m.querySelector("#modalBody").innerHTML = bodyHTML || "";
+  m.classList.add("show");
 }
-function setupForm(root){
-  const form = root.querySelector("#intakeForm");
-  const btn = root.querySelector("#submitBtn");
-  const errEl = root.querySelector("#formError");
-  const confirm = root.querySelector("#confirm");
-  const confirmMsg = root.querySelector("#confirmMsg");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    errEl.classList.remove("show");
-
-    const required = [...form.querySelectorAll("[required]")];
-    let ok = true;
-    required.forEach(el => {
-      const bad = !el.value || !el.value.trim();
-      el.classList.toggle("invalid", bad);
-      if(bad) ok = false;
-    });
-    if(!ok){ errEl.classList.add("show"); return; }
-
-    const payload = {};
-    [...form.elements].forEach(el => { if(el.name) payload[el.name] = el.value.trim(); });
-
-    if(!canWrite()){
-      confirmMsg.innerHTML = "It's in the queue for triage. You'll get a first response within 5 business days. <span class=\"mono\" style=\"color:var(--faint);\">(Demo — submissions aren't saved yet; see README to enable.)</span>";
-      form.style.display = "none";
-      confirm.classList.add("show");
-      return;
-    }
-
-    btn.disabled = true;
-    const label = btn.textContent;
-    btn.textContent = "Submitting…";
-    try{
-      await fetch(CONFIG.WRITE_URL, {
-        method:"POST",
-        headers:{ "Content-Type":"text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      });
-      confirmMsg.textContent = "It's in the queue for triage. You'll get a first response within 5 business days.";
-      form.style.display = "none";
-      confirm.classList.add("show");
-      if(document.querySelector("#portfolioTbl")) loadData();
-    }catch(err){
-      console.error("Submit failed:", err);
-      errEl.textContent = "Something went wrong submitting your request. Please try again.";
-      errEl.classList.add("show");
-    }finally{
-      btn.disabled = false;
-      btn.textContent = label;
-    }
-  });
+function closeModal(){
+  document.getElementById("appModal")?.classList.remove("show");
 }
 
 /* ============================================================
@@ -392,10 +293,19 @@ function wireUI(){
   backdrop?.addEventListener("click", closeNav);
   side?.querySelectorAll("a[href]").forEach(a => a.addEventListener("click", () => { if(innerWidth <= 880) closeNav(); }));
 
-  // any element with data-open-intake opens the modal
+  // "Meet the team" CTA → blank popup (content TBD)
   document.addEventListener("click", e => {
-    const t = e.target.closest("[data-open-intake]");
-    if(t){ e.preventDefault(); if(innerWidth <= 880) closeNav(); openModal(); }
+    const team = e.target.closest("[data-open-team]");
+    if(team){
+      e.preventDefault(); if(innerWidth <= 880) closeNav();
+      openModal("Meet the team", '<p class="lede" style="color:var(--muted);">To be added.</p>', "▤ The team");
+      return;
+    }
+    // clickable flow steps → popup with the step's description
+    const step = e.target.closest("[data-desc]");
+    if(step){
+      openModal(step.dataset.title, '<p class="lede" style="color:var(--muted);margin-top:2px;">' + step.dataset.desc + "</p>", step.dataset.eyebrow || "");
+    }
   });
 
   // reveal on scroll
